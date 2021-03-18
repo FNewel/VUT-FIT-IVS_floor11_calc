@@ -1,0 +1,73 @@
+IVS - 2. Project - plán
+
+Názov tímu: Floor11
+
+-- Členovia tímu:  
+    - Martin Talajka  - xtalaj00    (Github username: FNewell)
+    - Ondrej Kováč    - xkovac57    (Github username: MasloJePotravina)
+    - Michal Jančár   - xjanca17    (Github username: myshobsm)
+    
+-- Bližšie informácie:
+    - Operačný systém:          - Linux
+    - Dokumentácia:             - Doxygen
+    - Programovací jazyk:       - Python
+    - GUI:                      - PyQt5 /Dear PyGui
+    - Verzovací systém          - Github
+    - Systém na dokumentáciu    - Doxygen
+    - Jazyk pre poznámky/git    - Angličtina
+    - Lincencia                 - GNU General Public License v3.0
+    - Funkcia navyše            - Náhodné číslo
+    
+-- Stanovené termíny
+    Do 28.3 - Testy mat. funkcií
+    Do 4.4  - Mat. funkcie, Profiling
+    Do 12.4 - Grafické rozhranie, Testovanie graf. rozhrania, Makefile
+    Do 18.4 - Integrácia, Inštalácia
+    Do 25.4 - Dokumentácia, Príručka, README, Mockup
+    Do 29.4 - Odovzdanie
+    
+-- Rozdelené úlohy
+    - xtalaj00:
+        - Makefile
+        - Dokumentácia inštalácie /odinštalácie (príručka)
+        - Github
+        - GUI
+        - Mockup (výsledná forma)
+        - Organizácia
+        
+    - xkovac57:
+        - Testy matematických funkcií
+        - Dokumentácia kódu (konečná verzia, preklad, úpravy)
+        - Inštalátor /Odinštalátor programu (SK/EN)
+        
+    - xjanca17:
+        - Matematická knižnica
+        - Prezentácia (výsledná forma)
+        - Profiling
+        - Readme
+        
+    - Zdieľané úlohy:
+        - Dokumentácia kódu
+            - O dokumentáciu kódu sa postarajú všetci účastníci, ale xkovac57 sa na konci postará o výslednú verziu
+        - Prezentácia
+            - O prezentáciu sa postarajú všetci účastníci, ale xjanca17 sa na konci postará o výslednú verziu
+        - Mockup
+        - Debugging
+    
+-- Komunikačné kanály /nástroje
+    - Doodle    - Hlasovanie za deň a čas schôdze
+    - Discord   - Primárny chatový /komunikačný kanál, zdieľanie informácií 
+        Pravidlá:
+            - Zbytočne nespamovať, chovať sa slušne
+            - Informácie smerovať do kanálov na to určených
+    - Messenger - Sekundárny, hlavne chatový kanál
+    - Email     - Záložný komunikačný kanál, ak by niekoho nebolo možné dostihnúť na DS/Messenger
+    - Telefón   - Urgentný komunikačný nástroj (posledná záloha)
+    
+-- Verzovací systém:
+    - Github
+    Informácie:
+        - Repozitár je súkromný (private)
+        - Prístup pre členov tímu bude pridelený pomocou emailu /github username
+        - Prístup pre vyučujúceho /cvičiaceho bude pridelený pomocou emailu (ivskontrola - ivs.kontrola@gmail.com)
+        - URL: https://github.com/FNewel/floor11_calc
