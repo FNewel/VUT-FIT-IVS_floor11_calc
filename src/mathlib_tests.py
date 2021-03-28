@@ -91,7 +91,7 @@ class TestMultiplication(unittest.TestCase):
 ## @brief Tests for division
 class TestDivision(unittest.TestCase):
     
-    def tes_div(self):
+    def test_div(self):
 
         #Test positive and negative variations
         self.assertEqual(mathlib.div(20, 10), 2)
@@ -117,15 +117,132 @@ class TestDivision(unittest.TestCase):
 
 ## @brief Tests for factorial
 class TestFactorial(unittest.TestCase):
-    #TODO
+    
+    def test_fact(self):
+
+        #Test a > 0
+        self.assertEqual(mathlib.fact(1), 1)
+        self.assertEqual(mathlib.fact(4), 24)
+
+        #Test a = 0
+        self.assertEqual(mathlib.fact(0), 1)
+
+        #Test a < 0
+        self.assertRaises(ValueError, mathlib.fact(-3))
+        self.assertRaises(ValueError, mathlib.fact(-3.000))
+
+        #Test number is a float
+        self.assertRaises(TypeError, mathlib.fact(2.25))
+        self.assertRaises(TypeError, mathlib.fact(0.5))
+
+        #Test number is an integer-like float
+        self.assertEqual(mathlib.fact(2.00), 2)
+        self.assertEqual(mathlib.fact(4.0000), 24)
+
 
 ## @brief Tests for exponent
 class TestExponent(unittest.TestCase):
-    #TODO
+    
+    def test_exp(self):
+        
+        #Test n is not an integer
+        self.assertRaises(TypeError, mathlib.exp(2, 2.5))
+
+        #Test n < 0
+        self.assertRaises(ValueError, mathlib.exp(2, -2))
+        self.assertRaises(ValueError, mathlib.exp(0, -3))
+
+        #Test n = 0
+        self.assertEqual(mathlib.exp(2, 0), 1)
+        self.assertEqual(mathlib.exp(2.5, 0), 1)
+        self.assertEqual(mathlib.exp(-5, 0), 1)
+        self.assertEqual(mathlib.exp(0, 0), 1)
+
+        #Test n > 0, n is even
+        self.assertEqual(mathlib.exp(2, 2), 4)
+        self.assertEqual(mathlib.exp(-2, 2), 4)
+        self.assertEqual(mathlib.exp(0, 2), 0)
+        self.assertEqual(mathlib.exp(-0.5, 2), 0.25)
+
+        #Test n > 0, n is odd
+        self.assertEqual(mathlib.exp(2, 3), 8)
+        self.assertEqual(mathlib.exp(-2, 3), -8)
+        self.assertEqual(mathlib.exp(0, 3), 0)
+        self.assertEqual(mathlib.exp(-0.5, 3), -0.125)
 
 ## @brief Tests for root
 class TestRoot(unittest.TestCase):
-    #TODO
+
+    def test_root(self):
+
+        #Test n = 0
+        self.assertRaises(ZeroDivisionError, mathlib.root(0, 4))
+
+        #Test n < 0
+        self.assertRaises(ValueError, mathlib.root(-2, 4))
+        self.assertRaises(ValueError, mathlib.root(-3, 8))
+
+        #Test n is not an integer
+        self.assertRaises(TypeError, mathlib.root(2.5, 2))
+        self.assertRaises(TypeError, mathlib.root(0.5, 2))
+
+        #Test n > 0, n is even
+        #x > 0
+        self.assertEqual(mathlib.root(2, 16), 4)
+        self.assertEqual(mathlib.root(4, 16), 2)
+        #x = 0
+        self.assertEqual(mathlib.root(2, 0), 0)
+        self.assertEqual(mathlib.root(4, 0), 0)
+        #x < 0
+        self.assertRaises(ValueError, mathlib.root(2, -8))
+        
+        #Test n > 0, n is odd
+        #x > 0
+        self.assertEqual(mathlib.root(1, 8), 8)
+        self.assertEqual(mathlib.root(3, 8), 2)
+        #x = 0
+        self.assertEqual(mathlib.root(1, 0), 0)
+        self.assertEqual(mathlib.root(3, 0), 0)
+        #x < 0
+        self.assertEqual(mathlib.root(1, -8), -8)
+        self.assertEqual(mathlib.root(3, -8), -2)
+
+## @brief Tests for random number generator
+class TestRNG(unittest.TestCase):
+
+    def test_rng(self):
+
+        #Test a and b not integers
+        self.assertRaises(TypeError, mathlib.rng(10, 15.6))
+        self.assertRaises(TypeError, mathlib.rng(10.5, 15))
+        self.assertRaises(TypeError, mathlib.rng(10.5, 15.6))
+
+        #Test b < a
+        self.assertRaises(ValueError, mathlib.rng(20,10))
+        self.assertRaises(ValueError, mathlib.rng(2,3))
+
+        #Test a = b
+        self.assertRaises(ValueError, mathlib.rng(5,5))
+        self.assertRaises(ValueError, mathlib.rng(0,0))
+
+        #Test positive interval, should return integer
+        self.assertEqual((mathlib.rng(0, 20) % 1), 0)
+        self.assertTrue(0 <= (mathlib.rng(0,20)) <= 20)
+        self.assertEqual((mathlib.rng(50,120) % 1), 0)
+        self.assertTrue(50 <= (mathlib.rng(0,20)) <= 120)
+
+        #Test negative interval, should return integer
+        self.assertEqual((mathlib.rng(-20, 0) % 1), 0)
+        self.assertTrue(-20 <= (mathlib.rng(-20, 0)) <= 0)
+        self.assertEqual((mathlib.rng(-120, -50) % 1), 0)
+        self.assertTrue(-120 <= (mathlib.rng(-120, -50)) <= -50)
+
+        #Test negative-positive interval, should return integer
+        self.assertEqual((mathlib.rng(-20, 30) % 1), 0)
+        self.assertTrue(-20 <= (mathlib.rng(-20, 30)) <= 30)
+        self.assertEqual((mathlib.rng(-120, 50) % 1), 0)
+        self.assertTrue(-120 <= (mathlib.rng(-120, 50)) <= 50)
+                 
 
 if __name__ == '__main__':
     unittest.main()
