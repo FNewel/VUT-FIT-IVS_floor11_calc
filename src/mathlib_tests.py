@@ -15,7 +15,7 @@ class TestAddition(unittest.TestCase):
         self.assertEqual(mathlib.add(0.1, -0.2), -0.1)
         self.assertEqual(mathlib.add(0.2, -0.1), 0.1)
         self.assertEqual(mathlib.add(0, 0.1), 0.1)
-        self.assertEqual(mathlib.add(0, -0.1) -0.1)
+        self.assertEqual(mathlib.add(0, -0.1), -0.1)
         
         #Test result = 0
         self.assertEqual(mathlib.add(-5,5), 0)
