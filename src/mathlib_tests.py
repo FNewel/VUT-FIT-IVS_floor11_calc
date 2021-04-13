@@ -49,17 +49,17 @@ class TestSubtraction(unittest.TestCase):
         self.assertEqual(mathlib.sub(0.725,0.725), 0)
 
         #Test two negative values
-        self.assertEqual(mathlib.sub(-20, -10), -20)
+        self.assertEqual(mathlib.sub(-20, -10), -10)
         self.assertEqual(mathlib.sub(-1000, -2000), 1000)
-        self.assertEqual(mathlib.sub(-0.725, -0.275), -0.5)
+        self.assertEqual(mathlib.sub(-0.725, -0.225), -0.5)
 
         #Test one negative value
         self.assertEqual(mathlib.sub(-20, 10), -30)
         self.assertEqual(mathlib.sub(20, -10), 30)
-        self.assertEqual(mathlib.sub(1000, -2000), -1000)
+        self.assertEqual(mathlib.sub(1000, -2000), 3000)
         self.assertEqual(mathlib.sub(-1000, 2000), -3000)
         self.assertEqual(mathlib.sub(-0.725, 0.275), -1)
-        self.assertEqual(mathlib.sub(0.725, -0.275), 0.5)
+        self.assertEqual(mathlib.sub(0.725, -0.275), 1)
 
 
 ## @brief Tests for multiplication
@@ -100,8 +100,8 @@ class TestDivision(unittest.TestCase):
         self.assertEqual(mathlib.div(20, -10), -2)
 
         #Test division by zero
-        self.assertRaises(ZeroDivisionError, mathlib.div(1,0))
-        self.assertRaises(ZeroDivisionError, mathlib.div(0,0))
+        self.assertRaises(ZeroDivisionError, mathlib.div, 1, 0)
+        self.assertRaises(ZeroDivisionError, mathlib.div, 0, 0)
 
         #Test division of zero
         self.assertEqual(mathlib.div(0, 20), 0)
@@ -128,12 +128,12 @@ class TestFactorial(unittest.TestCase):
         self.assertEqual(mathlib.fact(0), 1)
 
         #Test a < 0
-        self.assertRaises(ValueError, mathlib.fact(-3))
-        self.assertRaises(ValueError, mathlib.fact(-3.000))
+        self.assertRaises(ValueError, mathlib.fact, -3)
+        self.assertRaises(ValueError, mathlib.fact, -3.000)
 
         #Test number is a float
-        self.assertRaises(TypeError, mathlib.fact(2.25))
-        self.assertRaises(TypeError, mathlib.fact(0.5))
+        self.assertRaises(TypeError, mathlib.fact, 2.25)
+        self.assertRaises(TypeError, mathlib.fact, 0.5)
 
         #Test number is an integer-like float
         self.assertEqual(mathlib.fact(2.00), 2)
@@ -146,11 +146,11 @@ class TestExponent(unittest.TestCase):
     def test_exp(self):
         
         #Test n is not an integer
-        self.assertRaises(TypeError, mathlib.exp(2, 2.5))
+        self.assertRaises(TypeError, mathlib.exp, 2, 2.5)
 
         #Test n < 0
-        self.assertRaises(ValueError, mathlib.exp(2, -2))
-        self.assertRaises(ValueError, mathlib.exp(0, -3))
+        self.assertRaises(ValueError, mathlib.exp, 2, -2)
+        self.assertRaises(ValueError, mathlib.exp, 0, -3)
 
         #Test n = 0
         self.assertEqual(mathlib.exp(2, 0), 1)
@@ -176,15 +176,15 @@ class TestRoot(unittest.TestCase):
     def test_root(self):
 
         #Test n = 0
-        self.assertRaises(ZeroDivisionError, mathlib.root(0, 4))
+        self.assertRaises(ZeroDivisionError, mathlib.root, 0, 4)
 
         #Test n < 0
-        self.assertRaises(ValueError, mathlib.root(-2, 4))
-        self.assertRaises(ValueError, mathlib.root(-3, 8))
+        self.assertRaises(ValueError, mathlib.root, -2, 4)
+        self.assertRaises(ValueError, mathlib.root, -3, 8)
 
         #Test n is not an integer
-        self.assertRaises(TypeError, mathlib.root(2.5, 2))
-        self.assertRaises(TypeError, mathlib.root(0.5, 2))
+        self.assertRaises(TypeError, mathlib.root, 2.5, 2)
+        self.assertRaises(TypeError, mathlib.root, 0.5, 2)
 
         #Test n > 0, n is even
         #x > 0
@@ -194,7 +194,7 @@ class TestRoot(unittest.TestCase):
         self.assertEqual(mathlib.root(2, 0), 0)
         self.assertEqual(mathlib.root(4, 0), 0)
         #x < 0
-        self.assertRaises(ValueError, mathlib.root(2, -8))
+        self.assertRaises(ValueError, mathlib.root, 2, -8)
         
         #Test n > 0, n is odd
         #x > 0
@@ -213,17 +213,17 @@ class TestRNG(unittest.TestCase):
     def test_rng(self):
 
         #Test a and b not integers
-        self.assertRaises(TypeError, mathlib.rng(10, 15.6))
-        self.assertRaises(TypeError, mathlib.rng(10.5, 15))
-        self.assertRaises(TypeError, mathlib.rng(10.5, 15.6))
+        self.assertRaises(TypeError, mathlib.rng, 10, 15.6)
+        self.assertRaises(TypeError, mathlib.rng, 10.5, 15)
+        self.assertRaises(TypeError, mathlib.rng, 10.5, 15.6)
 
         #Test b < a
-        self.assertRaises(ValueError, mathlib.rng(20,10))
-        self.assertRaises(ValueError, mathlib.rng(2,3))
+        self.assertRaises(ValueError, mathlib.rng, 20,10)
+        self.assertRaises(ValueError, mathlib.rng, 2,3)
 
         #Test a = b
-        self.assertRaises(ValueError, mathlib.rng(5,5))
-        self.assertRaises(ValueError, mathlib.rng(0,0))
+        self.assertRaises(ValueError, mathlib.rng, 5,5)
+        self.assertRaises(ValueError, mathlib.rng, 0,0)
 
         #Test positive interval, should return integer
         self.assertEqual((mathlib.rng(0, 20) % 1), 0)
