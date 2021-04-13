@@ -1,1 +1,0 @@
-This file has to be created so that I can add a new folder to the repository.
