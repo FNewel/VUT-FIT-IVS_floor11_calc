@@ -219,7 +219,7 @@ class TestRNG(unittest.TestCase):
 
         #Test b < a
         self.assertRaises(ValueError, mathlib.rng, 20,10)
-        self.assertRaises(ValueError, mathlib.rng, 2,3)
+        self.assertRaises(ValueError, mathlib.rng, 3,2)
 
         #Test a = b
         self.assertRaises(ValueError, mathlib.rng, 5,5)
@@ -229,7 +229,7 @@ class TestRNG(unittest.TestCase):
         self.assertEqual((mathlib.rng(0, 20) % 1), 0)
         self.assertTrue(0 <= (mathlib.rng(0,20)) <= 20)
         self.assertEqual((mathlib.rng(50,120) % 1), 0)
-        self.assertTrue(50 <= (mathlib.rng(0,20)) <= 120)
+        self.assertTrue(50 <= (mathlib.rng(50,120)) <= 120)
 
         #Test negative interval, should return integer
         self.assertEqual((mathlib.rng(-20, 0) % 1), 0)
