@@ -1,0 +1,48 @@
+15.4.2021 - porada - upravený plán
+
+Na dnešnej porade sme museli upraviť pôvodný plán a prerozdeliť prácu.
+Dôvod bol ten, že nás opustil jeden člen, Jančár Michal (zanechal štúdia) a museli sme prerozdeliť jeho prácu medzi nás.
+Ďalší dôvod bola moja choroba (Talajka Martin), nakazil som sa koronavírusom a niekoľko týždňov som nebol schopný plne sa venovať štúdiu, tým pádom som nemohol ani pracovať na projekte.
+
+
+Upravený plán (v obmedzenom rozsahu platí pôvodný plán, tu sú popísané iba zmeny):
+
+-- Členovia tímu:  
+    - Martin Talajka  - xtalaj00    (Github username: FNewell)
+    - Ondrej Kováč    - xkovac57    (Github username: MasloJePotravina)
+
+-- Rozdelené úlohy
+    - xtalaj00:
+        - Dokumentácia inštalácie /odinštalácie (príručka)
+        - Github
+        - GUI
+        - Mockup (výsledná forma)
+        - Organizácia
+        - Readme
+        - Prezentácia (výsledná forma)
+               
+    - xkovac57:
+        - Testy matematických funkcií
+        - Matematická knižnica
+        - Dokumentácia kódu (konečná verzia, preklad, úpravy)
+        - Inštalátor /Odinštalátor programu
+        - Profiling
+        
+    - Zdieľané úlohy:
+        - Makefile, čiastočne inštalácia /odinštalácia, dokumentácia inštalácie
+        - Dokumentácia kódu
+            - O dokumentáciu kódu sa postarajú všetci účastníci, ale xkovac57 sa na konci postará o výslednú verziu
+        - Prezentácia
+            - O prezentáciu sa postarajú všetci účastníci, ale xtalaj00 sa na konci postará o výslednú verziu
+        - Mockup
+        - Debugging
+
+-- Bližšie informácie:
+    - Operačný systém:          - Windows
+    - GUI:                      - PyQt5
+
+-- Stanovené termíny
+    Do 26.8 - Finálne dokončenie (GUI, Testovanie GUI, Makefile, Integrácia, Inštalácia)
+    Do 28.4 - Dokumentácia, Príručka, README, Mockup
+    Do 29.4 - Odovzdanie
+
