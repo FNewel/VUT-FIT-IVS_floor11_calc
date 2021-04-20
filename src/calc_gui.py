@@ -30,27 +30,45 @@ class Ui_MainWindow(object):
         # Set icon for MainWindow
         srcDir = os.path.dirname(os.path.realpath(__file__))
         MainWindow.setWindowIcon(QtGui.QIcon(srcDir + os.path.sep + 'Calc_icon.ico'))
-
+        
         # Set frame name, size and style
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(0, 0, 300, 410))
-        self.frame.setMinimumSize(QtCore.QSize(300, 410))
-        self.frame.setMaximumSize(QtCore.QSize(300, 410))
-        self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
-                                 "QTextBrowser { background-color: rgb(68, 68, 68); border-style: outset; border-color: rgb(0, 0, 0); border-width: 2px; border-radius: 10px; }"
-                                 "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
-                                 "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
-                                 "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
-                                 "QPushButton[objectName^=\"b\"] { background-color: rgb(68, 68, 68) }"
-                                 "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
-                                 "QPushButton:hover { background-color: rgb(122, 122, 122) }"
-                                 "QPushButton:pressed { background-color: rgb(135, 135, 135) }"
-                                )
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
+        
+        def FrameFormat(dark):
+            self.frame = QtWidgets.QFrame(self.centralwidget)
+            self.frame.setGeometry(QtCore.QRect(0, 0, 300, 410))
+            self.frame.setMinimumSize(QtCore.QSize(300, 410))
+            self.frame.setMaximumSize(QtCore.QSize(300, 410))
+            if dark:
+                print("Black")  # TODO debug printout
+                self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
+                                        "QTextBrowser { background-color: rgb(68, 68, 68); border-style: outset; border-color: rgb(0, 0, 0); border-width: 2px; border-radius: 10px; }"
+                                        "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
+                                        "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
+                                        "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
+                                        "QPushButton[objectName^=\"b\"] { background-color: rgb(68, 68, 68) }"
+                                        "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
+                                        "QPushButton:hover { background-color: rgb(122, 122, 122) }"
+                                        "QPushButton:pressed { background-color: rgb(135, 135, 135) }"
+                                        )
+            else:
+                print("White")  # TODO debug printout
+                # TODO farby nesedia, je tam všade len červená na test ..
+                self.frame.setStyleSheet("QFrame { background-color: rgb(255,0,0) }"
+                                        "QTextBrowser { background-color: rgb(255,0,0); border-style: outset; border-color: rgb(0, 0, 0); border-width: 2px; border-radius: 10px; }"
+                                        "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
+                                        "QPushButton[objectName^=\"n\"] { background-color: rgb(255,0,0) }"
+                                        "QPushButton[objectName^=\"e\"] { background-color: rgb(255,0,0); font: 30pt \"Noto Mono\" }"
+                                        "QPushButton[objectName^=\"b\"] { background-color: rgb(255,0,0) }"
+                                        "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
+                                        "QPushButton:hover { background-color: rgb(255,0,0) }"
+                                        "QPushButton:pressed { background-color: rgb(255,0,0) }"
+                                        )
+            self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+            self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+            self.frame.setObjectName("frame")
+        FrameFormat(True)
         
         # Set same font for all buttons
         font = QtGui.QFont("Noto Mono", 20)
@@ -248,6 +266,14 @@ class Ui_MainWindow(object):
         self.actionDark_mode.setCheckable(True)
         self.actionDark_mode.setChecked(True)
         self.actionDark_mode.setObjectName("actionDark_mode")
+
+        # Change color to white/dark if button is pressed
+        def changeColor(self):
+            if self:
+                FrameFormat(True)   # Dark
+            else:
+                FrameFormat(False)  # White
+        self.actionDark_mode.toggled.connect(changeColor)
 
         # Menu entry - Help
         self.actionHelp = QtWidgets.QAction(MainWindow)
