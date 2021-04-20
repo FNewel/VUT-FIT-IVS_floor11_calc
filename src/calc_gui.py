@@ -350,11 +350,13 @@ class Ui_MainWindow(object):
 
         self.equal_button.setText(_translate("MainWindow", "="))
         self.equal_button.setShortcut(_translate("MainWindow", "Enter"))
-        
 
         # So far only test code
-        self.h_display.setText("-- 0987654321 2nd hdisplay 1234567890 --")
-        self.main_display.setText("-- 0987654321 Main display 1234567890 --")
+        m_string = ""
+        h_string = ""
+
+        self.h_display.setText(h_string)
+        self.main_display.setText(m_string)
         # End of test code
 
         self.menuMenu.setTitle(_translate("MainWindow", "Menu"))
