@@ -55,6 +55,7 @@ class Ui_MainWindow(object):
         # Set same font for all buttons
         font = QtGui.QFont("Noto Mono", 20)
 
+        # Set all buttons attributes - position, font, cursor change, name
         self.n_button_sign = QtWidgets.QPushButton(self.frame)
         self.n_button_sign.setGeometry(QtCore.QRect(4, 356, 70, 50))
         self.n_button_sign.setFont(font)
@@ -233,6 +234,7 @@ class Ui_MainWindow(object):
         self.line_2 = QtWidgets.QFrame(self.frame)
         self.line_2.setGeometry(QtCore.QRect(8, 62, 280, 1))
 
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 300, 30))
@@ -240,14 +242,21 @@ class Ui_MainWindow(object):
         self.menuMenu = QtWidgets.QMenu(self.menubar)
         self.menuMenu.setObjectName("menuMenu")
         MainWindow.setMenuBar(self.menubar)
+
+        # Menu entry - dark mode
         self.actionDark_mode = QtWidgets.QAction(MainWindow)
         self.actionDark_mode.setCheckable(True)
         self.actionDark_mode.setChecked(True)
         self.actionDark_mode.setObjectName("actionDark_mode")
+
+        # Menu entry - Help
         self.actionHelp = QtWidgets.QAction(MainWindow)
         self.actionHelp.setObjectName("actionHelp")
+
+        # Menu entry - Information
         self.actionInformation = QtWidgets.QAction(MainWindow)
         self.actionInformation.setObjectName("actionInformation")
+
         self.menuMenu.addAction(self.actionDark_mode)
         self.menuMenu.addSeparator()
         self.menuMenu.addAction(self.actionHelp)
