@@ -30,43 +30,25 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
-        # Function for dark/white mode # TODO only dark mode works
-        def FrameFormat(dark):
-            self.frame = QtWidgets.QFrame(self.centralwidget)
-            self.frame.setGeometry(QtCore.QRect(0, 0, 300, 410))
-            self.frame.setMinimumSize(QtCore.QSize(300, 410))
-            self.frame.setMaximumSize(QtCore.QSize(300, 410))
-            if dark:
-                print("Black")  # TODO debug printout
-                # Dark Style Sheet
-                self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
-                                        "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
-                                        "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
-                                        "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
-                                        "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
-                                        "QPushButton[objectName^=\"b\"] { background-color: rgb(68, 68, 68) }"
-                                        "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
-                                        "QPushButton:hover { background-color: rgb(122, 122, 122) }"
-                                        "QPushButton:pressed { background-color: rgb(135, 135, 135) }"
-                                        )
-            else:
-                print("White")  # TODO debug printout
-                # TODO farby nesedia, je tam všade len červená na test ..
-                # White Style Sheet
-                self.frame.setStyleSheet("QFrame { background-color: rgb(255,0,0) }"
-                                        "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(0, 0, 0)}"
-                                        "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
-                                        "QPushButton[objectName^=\"n\"] { background-color: rgb(255,0,0) }"
-                                        "QPushButton[objectName^=\"e\"] { background-color: rgb(255,0,0); font: 30pt \"Noto Mono\" }"
-                                        "QPushButton[objectName^=\"b\"] { background-color: rgb(255,0,0) }"
-                                        "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
-                                        "QPushButton:hover { background-color: rgb(255,0,0) }"
-                                        "QPushButton:pressed { background-color: rgb(255,0,0) }"
-                                        )
-            self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-            self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-            self.frame.setObjectName("frame")
-        FrameFormat(True)
+        # Set calculator UI to dark (by default)
+        self.frame = QtWidgets.QFrame(self.centralwidget)
+        self.frame.setGeometry(QtCore.QRect(0, 0, 300, 410))
+        self.frame.setMinimumSize(QtCore.QSize(300, 410))
+        self.frame.setMaximumSize(QtCore.QSize(300, 410))
+        self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
+                                "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
+                                "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
+                                "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
+                                "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
+                                "QPushButton[objectName^=\"b\"] { background-color: rgb(68, 68, 68) }"
+                                "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
+                                "QPushButton:hover { background-color: rgb(122, 122, 122) }"
+                                "QPushButton:pressed { background-color: rgb(135, 135, 135) }"
+                                )
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+
         
         # Set same font for all buttons
         font = QtGui.QFont("Noto Mono", 20)
@@ -266,16 +248,13 @@ class Ui_MainWindow(object):
         self.actionDark_mode.setObjectName("actionDark_mode")
 
         # Change color to white/dark if button in menu is checked
-        def changeColor(self):
-            if self:
-                FrameFormat(True)   # Dark
-            else:
-                FrameFormat(False)  # White
-        self.actionDark_mode.toggled.connect(changeColor)
+        self.actionDark_mode.toggled.connect(lambda c = self.actionDark_mode.toggle : self.sColor(c))
 
         # Menu entry - Help
         self.actionHelp = QtWidgets.QAction(MainWindow)
         self.actionHelp.setObjectName("actionHelp")
+
+        # Open help pdf     # TODO
 
         # Menu entry - Information
         self.actionInformation = QtWidgets.QAction(MainWindow)
@@ -290,7 +269,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "F11 Calculator"))
@@ -349,14 +327,6 @@ class Ui_MainWindow(object):
 
         self.equal_button.setText(_translate("MainWindow", "="))
         self.equal_button.setShortcut(_translate("MainWindow", "Enter"))
-
-        # So far only test code
-        m_string = ""
-        h_string = ""
-
-        self.h_display.setText(h_string)
-        self.main_display.setText(m_string)
-        # End of test code
 
         self.menuMenu.setTitle(_translate("MainWindow", "Menu"))
         self.actionDark_mode.setText(_translate("MainWindow", "Dark mode"))
