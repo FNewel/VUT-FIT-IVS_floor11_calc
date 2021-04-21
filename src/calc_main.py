@@ -3,6 +3,7 @@
 # @date 21.4.2021
 # @brief The main logic of the calculator
 
+from os import MFD_ALLOW_SEALING
 import sys
 import mathlib
 import qtmodern.styles  # from https://github.com/gmarull/qtmodern
@@ -20,12 +21,10 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     bin_ops = {'+', '-', '/', '*', '^'}
     un_ops = {'√', '!'}
     parentheses = {'(',')'}
+    open_par = 0
 
     #Is decimal point set in this number
     dec_p = False
-
-    #Is left parenthesis in text
-    left_p = False
 
     def sText(self, text):
         self.main_display.setText(text)
@@ -38,25 +37,22 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     # Append binary operator
     def aBinOp(self, op):
         if self.md_text != "":
-            if self.md_text[-1] not in self.bin_ops:
+            if self.md_text[-1].isdigit() or self.md_text[-1] == ")":
                 self.md_text += op
                 self.main_display.setText(self.md_text)
                 self.dec_p = False
-            else:
+            elif self.md_text[-1] in self.bin_ops:
                 self.md_text = self.md_text[:-1]
                 self.md_text += op
                 self.main_display.setText(self.md_text)
                 self.dec_p = False
-        else:
-            self.md_text = op
-            self.main_display.setText(self.md_text)
 
-    # Append unary operator #TODO: Do not allow unary operators inside one another
+    # Append unary operator 
     def aUnOp(self, op):
         if self.md_text == "" or self.md_text[-1] in self.bin_ops:
             self.md_text += op
             self.main_display.setText(self.md_text)
-            self.left_p = True
+            self.open_par +=1
 
     #Append decimal point
     def aDecPoint(self):
@@ -75,25 +71,42 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.md_text != "":
             if len(self.md_text) > 1 and self.md_text[-2] in self.un_ops:
                 self.md_text = self.md_text[:-2]
-                self.left_p = False
-            elif self.md_text[:-1] in self.parentheses:
-                self.md_text = self.md_text[:-1]
             else:
+                if self.md_text[-1] == ".":
+                    self.dec_p = False
                 self.md_text = self.md_text[:-1]
             self.main_display.setText(self.md_text)
 
-    #Append parenthesis based on the last one
-    def aParenthesis(self):
-        if self.left_p == False:
-            self.md_text += "("
+    #Append parenthesis
+    def aParenthesis(self, text):
+        if text == "(":
+            self.md_text += text
             self.main_display.setText(self.md_text)
-            self.left_p = True
-        else:
+            self.open_par += 1
+        if text == ")" and self.open_par > 0:
             self.md_text += ")"
             self.main_display.setText(self.md_text)
-            self.left_p = False
+            self.open_par -= 1
 
+    #Clear both main and secondary displays
+    def ClearEverything(self):
+        self.md_text = ""
+        self.dec_p = False
+        self.open_par = 0
+        self.main_display.setText(self.md_text)
 
+    #Change sign of number
+    def ChangeSign(self):
+        if self.md_text.isnumeric() or self.md_text == "":
+            self.md_text = "-" + self.md_text
+            self.main_display.setText(self.md_text)
+        elif self.md_text[0] == "-" and self.md_text[1:].isnumeric():
+            self.md_text = self.md_text[1:]
+            self.main_display.setText(self.md_text)
+
+            
+
+    
 
 
 
