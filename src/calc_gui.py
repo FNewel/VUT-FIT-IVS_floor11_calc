@@ -18,7 +18,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 
 import PyQt5 
-
+import qtmodern.styles # from https://github.com/gmarull/qtmodern
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -376,6 +376,9 @@ if __name__ == "__main__":
     
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+
+    qtmodern.styles.dark(app)
+
     MainWindow.show()
     sys.exit(app.exec_())
 
