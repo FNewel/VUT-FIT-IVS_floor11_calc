@@ -16,11 +16,16 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     # Variable holds text displayed on main display
     md_text = ""
 
-    #Binary operators
+    #Symbols
     bin_ops = {'+', '-', '/', '*', '^'}
+    un_ops = {'√', '!'}
+    parentheses = {'(',')'}
 
-    #Unary operators
-    un_ops = {'√(', '!('}
+    #Is decimal point set in this number
+    dec_p = False
+
+    #Is left parenthesis in text
+    left_p = False
 
     def sText(self, text):
         self.main_display.setText(text)
@@ -36,10 +41,12 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             if self.md_text[-1] not in self.bin_ops:
                 self.md_text += op
                 self.main_display.setText(self.md_text)
+                self.dec_p = False
             else:
                 self.md_text = self.md_text[:-1]
                 self.md_text += op
                 self.main_display.setText(self.md_text)
+                self.dec_p = False
         else:
             self.md_text = op
             self.main_display.setText(self.md_text)
@@ -49,6 +56,44 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.md_text == "" or self.md_text[-1] in self.bin_ops:
             self.md_text += op
             self.main_display.setText(self.md_text)
+            self.left_p = True
+
+    #Append decimal point
+    def aDecPoint(self):
+        if self.dec_p == False:
+            if self.md_text != "" and self.md_text[-1].isdigit():
+                self.md_text += "."
+                self.main_display.setText(self.md_text)
+                self.dec_p = True
+            else:
+                self.md_text += "0."
+                self.main_display.setText(self.md_text)
+                self.dec_p = True
+
+    #Delete last character (2 if last is factorial or root)
+    def BackSpace(self):
+        if self.md_text != "":
+            if len(self.md_text) > 1 and self.md_text[-2] in self.un_ops:
+                self.md_text = self.md_text[:-2]
+                self.left_p = False
+            elif self.md_text[:-1] in self.parentheses:
+                self.md_text = self.md_text[:-1]
+            else:
+                self.md_text = self.md_text[:-1]
+            self.main_display.setText(self.md_text)
+
+    #Append parenthesis based on the last one
+    def aParenthesis(self):
+        if self.left_p == False:
+            self.md_text += "("
+            self.main_display.setText(self.md_text)
+            self.left_p = True
+        else:
+            self.md_text += ")"
+            self.main_display.setText(self.md_text)
+            self.left_p = False
+
+
 
 
 

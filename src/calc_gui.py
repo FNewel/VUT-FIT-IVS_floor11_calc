@@ -291,11 +291,11 @@ class Ui_MainWindow(object):
         self.button_sroot.clicked.connect(lambda: self.aUnOp("√("))
 
         self.n_button_sign.clicked.connect(lambda: self.sText("???"))   # TODO! sign
-        self.n_button_comma.clicked.connect(lambda: self.sText("."))
-        self.button_parent.clicked.connect(lambda: self.sText("("))     # TODO! ?? idk či takto :D
+        self.n_button_comma.clicked.connect(lambda: self.aDecPoint())
+        self.button_parent.clicked.connect(lambda: self.aParenthesis())     # TODO! ?? idk či takto :D
         self.button_random.clicked.connect(lambda: self.sText("rnd("))
 
-        self.button_delete.clicked.connect(lambda: self.sText("???"))   # TODO! delete (Backspace)
+        self.button_delete.clicked.connect(lambda: self.BackSpace())   # TODO! delete (Backspace)
         self.button_ce.clicked.connect(lambda: self.sText("???"))       # TODO! delete (CE)
         
         self.equal_button.clicked.connect(lambda: self.sText("="))
