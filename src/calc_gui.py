@@ -43,7 +43,7 @@ class Ui_MainWindow(object):
             if dark:
                 print("Black")  # TODO debug printout
                 self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
-                                        "QTextBrowser { background-color: rgb(68, 68, 68); border-style: outset; border-color: rgb(0, 0, 0); border-width: 2px; border-radius: 10px; }"
+                                        "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
                                         "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
                                         "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
                                         "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
                 print("White")  # TODO debug printout
                 # TODO farby nesedia, je tam všade len červená na test ..
                 self.frame.setStyleSheet("QFrame { background-color: rgb(255,0,0) }"
-                                        "QTextBrowser { background-color: rgb(255,0,0); border-style: outset; border-color: rgb(0, 0, 0); border-width: 2px; border-radius: 10px; }"
+                                        "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(0, 0, 0)}"
                                         "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
                                         "QPushButton[objectName^=\"n\"] { background-color: rgb(255,0,0) }"
                                         "QPushButton[objectName^=\"e\"] { background-color: rgb(255,0,0); font: 30pt \"Noto Mono\" }"
