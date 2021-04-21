@@ -34,7 +34,8 @@ class Ui_MainWindow(object):
         # Set frame name, size and style
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        
+
+        # Function for dark/white mode # TODO only dark mode works
         def FrameFormat(dark):
             self.frame = QtWidgets.QFrame(self.centralwidget)
             self.frame.setGeometry(QtCore.QRect(0, 0, 300, 410))
@@ -42,6 +43,7 @@ class Ui_MainWindow(object):
             self.frame.setMaximumSize(QtCore.QSize(300, 410))
             if dark:
                 print("Black")  # TODO debug printout
+                # Dark Style Sheet
                 self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
                                         "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
                                         "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
@@ -55,6 +57,7 @@ class Ui_MainWindow(object):
             else:
                 print("White")  # TODO debug printout
                 # TODO farby nesedia, je tam všade len červená na test ..
+                # White Style Sheet
                 self.frame.setStyleSheet("QFrame { background-color: rgb(255,0,0) }"
                                         "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(0, 0, 0)}"
                                         "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
@@ -267,7 +270,7 @@ class Ui_MainWindow(object):
         self.actionDark_mode.setChecked(True)
         self.actionDark_mode.setObjectName("actionDark_mode")
 
-        # Change color to white/dark if button is pressed
+        # Change color to white/dark if button in menu is checked
         def changeColor(self):
             if self:
                 FrameFormat(True)   # Dark
@@ -292,11 +295,12 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    # Set buttons names and keyboard shortcuts
+    
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "F11 Calculator"))
         
+        # Set buttons names and keyboard shortcuts
         self.n_button_0.setText(_translate("MainWindow", "0"))
         self.n_button_0.setShortcut(_translate("MainWindow", "0"))
         self.n_button_1.setText(_translate("MainWindow", "1"))
@@ -369,6 +373,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
+    
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
