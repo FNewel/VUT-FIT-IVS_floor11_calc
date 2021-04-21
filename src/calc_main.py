@@ -3,8 +3,10 @@
 # @date 21.4.2021
 # @brief The main logic of the calculator
 
+import os
 from os import MFD_ALLOW_SEALING
 import sys
+import platform
 import mathlib
 import qtmodern.styles  # from https://github.com/gmarull/qtmodern
 
@@ -95,6 +97,16 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.open_par = 0
         self.main_display.setText(self.md_text)
 
+
+    # Opens Guide PDF on a specific system (Windows/Linux)
+    def oPDF_g(self):
+        srcDir = os.path.dirname(os.path.realpath(__file__))
+        pdf_path = srcDir + os.path.sep + 'CalcGuide.pdf'
+        if platform.system() == "Windows":
+            os.startfile(pdf_path)
+        elif platform.system() == "Linux":
+            os.system('xdg-open \"{}\"'.format(pdf_path))
+
     #Change sign of number
     def ChangeSign(self):
         if self.md_text.isnumeric() or self.md_text == "":
@@ -104,37 +116,42 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             self.md_text = self.md_text[1:]
             self.main_display.setText(self.md_text)
 
-            
-
-    
-
-
+    # Opens Guide PDF on a specific system (Windows/Linux)
+    def oPDF_g(self):
+        srcDir = os.path.dirname(os.path.realpath(__file__))
+        pdf_path = srcDir + os.path.sep + 'CalcGuide.pdf'
+        if platform.system() == "Windows":
+            os.startfile(pdf_path)
+        elif platform.system() == "Linux":
+            os.system('xdg-open \"{}\"'.format(pdf_path))
 
     # Function for UI color change (dark/white)
     def sColor(self, dark):
         if dark:
             # Dark Style Sheet
+            qtmodern.styles.dark(app)
             self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
-                                    "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
-                                    "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
-                                    "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
-                                    "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
-                                    "QPushButton[objectName^=\"b\"] { background-color: rgb(68, 68, 68) }"
-                                    "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
-                                    "QPushButton:hover { background-color: rgb(122, 122, 122) }"
-                                    "QPushButton:pressed { background-color: rgb(135, 135, 135) }"
+                                     "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
+                                     "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
+                                     "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
+                                     "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
+                                     "QPushButton[objectName^=\"b\"] { background-color: rgb(68, 68, 68) }"
+                                     "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
+                                     "QPushButton:hover { background-color: rgb(122, 122, 122) }"
+                                     "QPushButton:pressed { background-color: rgb(135, 135, 135) }"
                                     )
         else:
-            # White Style Sheet     # TODO - farby treba spraviť !
-            self.frame.setStyleSheet("QFrame { background-color: rgb(255,0,0) }"
-                                    "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(0, 0, 0)}"
-                                    "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
-                                    "QPushButton[objectName^=\"n\"] { background-color: rgb(255,0,0) }"
-                                    "QPushButton[objectName^=\"e\"] { background-color: rgb(255,0,0); font: 30pt \"Noto Mono\" }"
-                                    "QPushButton[objectName^=\"b\"] { background-color: rgb(255,0,0) }"
-                                    "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
-                                    "QPushButton:hover { background-color: rgb(255,0,0) }"
-                                    "QPushButton:pressed { background-color: rgb(255,0,0) }"
+            # White Style Sheet
+            qtmodern.styles.light(app)
+            self.frame.setStyleSheet("QFrame { background-color: rgb(243, 243, 243) }"
+                                     "QLineEdit { background-color: rgb(220, 220, 220); border-style: outset; border-width: 0px; color: rgb(0, 0, 0)}"
+                                     "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: black }"
+                                     "QPushButton[objectName^=\"n\"] { background-color: rgb(252, 252, 252) }"
+                                     "QPushButton[objectName^=\"e\"] { background-color: rgb(200, 200, 200); font: 30pt \"Noto Mono\" }"
+                                     "QPushButton[objectName^=\"b\"] { background-color: rgb(220, 220, 220) }"
+                                     "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
+                                     "QPushButton:hover { background-color: rgb(235, 235, 235) }"
+                                     "QPushButton:pressed { background-color: rgb(255, 255, 255) }"
                                     )
 
 if __name__ == "__main__":
@@ -145,7 +162,7 @@ if __name__ == "__main__":
     ui = calcLogic()
     ui.setupUi(MainWindow)
 
-    # TODO - toto upraviť aby to fungovalo s dark/white módom
+    # Default set dark theme
     qtmodern.styles.dark(app)
 
     MainWindow.show()
