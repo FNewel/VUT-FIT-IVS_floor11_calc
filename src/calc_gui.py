@@ -232,7 +232,6 @@ class Ui_MainWindow(object):
         self.line_2 = QtWidgets.QFrame(self.frame)
         self.line_2.setGeometry(QtCore.QRect(8, 62, 280, 1))
 
-
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 300, 30))
@@ -254,7 +253,8 @@ class Ui_MainWindow(object):
         self.actionHelp = QtWidgets.QAction(MainWindow)
         self.actionHelp.setObjectName("actionHelp")
 
-        # Open help pdf     # TODO
+        # Open help pdf
+        self.actionHelp.triggered.connect(lambda: self.oPDF_g())
 
         # Menu entry - Information
         self.actionInformation = QtWidgets.QAction(MainWindow)
@@ -299,9 +299,6 @@ class Ui_MainWindow(object):
         self.button_ce.clicked.connect(lambda: self.ClearEverything())       # TODO! delete (CE)
         
         self.equal_button.clicked.connect(lambda: self.sText("="))
-
-
-
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
