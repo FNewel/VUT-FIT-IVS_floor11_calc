@@ -13,6 +13,10 @@ from calc_gui import Ui_MainWindow
 class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     print("-- Main --") #! Debug printout
     
+    # Simple text append # TODO toto bude inak vyzerať
+    def sText(self, text):
+        self.main_display.setText(text)
+
     # Function for UI color change (dark/white)
     def sColor(self, dark):
         if dark:
