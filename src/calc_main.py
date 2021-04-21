@@ -3,8 +3,10 @@
 # @date 21.4.2021
 # @brief The main logic of the calculator
 
+import os
 from os import MFD_ALLOW_SEALING
 import sys
+import platform
 import mathlib
 import qtmodern.styles  # from https://github.com/gmarull/qtmodern
 
@@ -95,6 +97,16 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.open_par = 0
         self.main_display.setText(self.md_text)
 
+
+    # Opens Guide PDF on a specific system (Windows/Linux)
+    def oPDF_g(self):
+        srcDir = os.path.dirname(os.path.realpath(__file__))
+        pdf_path = srcDir + os.path.sep + 'CalcGuide.pdf'
+        if platform.system() == "Windows":
+            os.startfile(pdf_path)
+        elif platform.system() == "Linux":
+            os.system('xdg-open \"{}\"'.format(pdf_path))
+
     #Change sign of number
     def ChangeSign(self):
         if self.md_text.isnumeric() or self.md_text == "":
@@ -104,11 +116,14 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             self.md_text = self.md_text[1:]
             self.main_display.setText(self.md_text)
 
-            
-
-    
-
-
+    # Opens Guide PDF on a specific system (Windows/Linux)
+    def oPDF_g(self):
+        srcDir = os.path.dirname(os.path.realpath(__file__))
+        pdf_path = srcDir + os.path.sep + 'CalcGuide.pdf'
+        if platform.system() == "Windows":
+            os.startfile(pdf_path)
+        elif platform.system() == "Linux":
+            os.system('xdg-open \"{}\"'.format(pdf_path))
 
     # Function for UI color change (dark/white)
     def sColor(self, dark):
