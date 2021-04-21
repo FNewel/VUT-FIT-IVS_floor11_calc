@@ -19,8 +19,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         # Set MainWindow name and size
         MainWindow.setObjectName("MainWindow")
-        MainWindow.setMinimumSize(QtCore.QSize(300, 440))
-        MainWindow.setMaximumSize(QtCore.QSize(300, 440))
+        MainWindow.setMinimumSize(QtCore.QSize(300, 485))
+        MainWindow.setMaximumSize(QtCore.QSize(300, 485))
 
         # Set icon for MainWindow
         srcDir = os.path.dirname(os.path.realpath(__file__))
@@ -32,9 +32,9 @@ class Ui_MainWindow(object):
 
         # Set calculator UI to dark (by default)
         self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(0, 0, 300, 410))
-        self.frame.setMinimumSize(QtCore.QSize(300, 410))
-        self.frame.setMaximumSize(QtCore.QSize(300, 410))
+        self.frame.setGeometry(QtCore.QRect(0, 0, 300, 480))
+        self.frame.setMinimumSize(QtCore.QSize(300, 470))
+        self.frame.setMaximumSize(QtCore.QSize(300, 470))
         self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
                                 "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
                                 "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
@@ -55,127 +55,154 @@ class Ui_MainWindow(object):
 
         # Set all buttons attributes - position, font, cursor change, name
         self.n_button_0 = QtWidgets.QPushButton(self.frame)
-        self.n_button_0.setGeometry(QtCore.QRect(76, 356, 70, 50))
+        self.n_button_0.setGeometry(QtCore.QRect(76, 408, 70, 50))
         self.n_button_0.setFont(font)
         self.n_button_0.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_0.setObjectName("n_button_0")
 
         self.n_button_1 = QtWidgets.QPushButton(self.frame)
-        self.n_button_1.setGeometry(QtCore.QRect(4, 304, 70, 50))
+        self.n_button_1.setGeometry(QtCore.QRect(4, 356, 70, 50))
         self.n_button_1.setFont(font)
         self.n_button_1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_1.setObjectName("n_button_1")
 
         self.n_button_2 = QtWidgets.QPushButton(self.frame)
-        self.n_button_2.setGeometry(QtCore.QRect(76, 304, 70, 50))
+        self.n_button_2.setGeometry(QtCore.QRect(76, 356, 70, 50))
         self.n_button_2.setFont(font)
         self.n_button_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_2.setObjectName("n_button_2")
 
         self.n_button_3 = QtWidgets.QPushButton(self.frame)
-        self.n_button_3.setGeometry(QtCore.QRect(148, 304, 70, 50))
+        self.n_button_3.setGeometry(QtCore.QRect(148, 356, 70, 50))
         self.n_button_3.setFont(font)
         self.n_button_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_3.setObjectName("n_button_3")
 
         self.n_button_4 = QtWidgets.QPushButton(self.frame)
-        self.n_button_4.setGeometry(QtCore.QRect(4, 252, 70, 50))
+        self.n_button_4.setGeometry(QtCore.QRect(4, 304, 70, 50))
         self.n_button_4.setFont(font)
         self.n_button_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_4.setObjectName("n_button_4")
 
         self.n_button_5 = QtWidgets.QPushButton(self.frame)
-        self.n_button_5.setGeometry(QtCore.QRect(76, 252, 70, 50))
+        self.n_button_5.setGeometry(QtCore.QRect(76, 304, 70, 50))
         self.n_button_5.setFont(font)
         self.n_button_5.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_5.setObjectName("n_button_5")
 
         self.n_button_6 = QtWidgets.QPushButton(self.frame)
-        self.n_button_6.setGeometry(QtCore.QRect(148, 252, 70, 50))
+        self.n_button_6.setGeometry(QtCore.QRect(148, 304, 70, 50))
         self.n_button_6.setFont(font)
         self.n_button_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_6.setObjectName("n_button_6")
 
         self.n_button_7 = QtWidgets.QPushButton(self.frame)
-        self.n_button_7.setGeometry(QtCore.QRect(4, 200, 70, 50))
+        self.n_button_7.setGeometry(QtCore.QRect(4, 252, 70, 50))
         self.n_button_7.setFont(font)
         self.n_button_7.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_7.setObjectName("n_button_7")
 
         self.n_button_8 = QtWidgets.QPushButton(self.frame)
-        self.n_button_8.setGeometry(QtCore.QRect(76, 200, 70, 50))
+        self.n_button_8.setGeometry(QtCore.QRect(76, 252, 70, 50))
         self.n_button_8.setFont(font)
         self.n_button_8.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_8.setObjectName("n_button_8")
 
         self.n_button_9 = QtWidgets.QPushButton(self.frame)
-        self.n_button_9.setGeometry(QtCore.QRect(148, 200, 70, 50))
+        self.n_button_9.setGeometry(QtCore.QRect(148, 252, 70, 50))
         self.n_button_9.setFont(font)
         self.n_button_9.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_9.setObjectName("n_button_9")
 
         self.button_plus = QtWidgets.QPushButton(self.frame)
-        self.button_plus.setGeometry(QtCore.QRect(224, 304, 70, 50))
+        self.button_plus.setGeometry(QtCore.QRect(224, 356, 70, 50))
         self.button_plus.setFont(font)
         self.button_plus.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.button_plus.setObjectName("button_plus")
 
         self.button_minus = QtWidgets.QPushButton(self.frame)
-        self.button_minus.setGeometry(QtCore.QRect(224, 252, 70, 50))
+        self.button_minus.setGeometry(QtCore.QRect(224, 304, 70, 50))
         self.button_minus.setFont(font)
         self.button_minus.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.button_minus.setObjectName("button_minus")
 
         self.button_multiply = QtWidgets.QPushButton(self.frame)
-        self.button_multiply.setGeometry(QtCore.QRect(224, 200, 70, 50))
+        self.button_multiply.setGeometry(QtCore.QRect(224, 252, 70, 50))
         self.button_multiply.setFont(font)
         self.button_multiply.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.button_multiply.setObjectName("button_multiply")
         
         self.button_divide = QtWidgets.QPushButton(self.frame)
-        self.button_divide.setGeometry(QtCore.QRect(224, 144, 70, 50))
+        self.button_divide.setGeometry(QtCore.QRect(224, 196, 70, 50))
         self.button_divide.setFont(font)
         self.button_divide.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.button_divide.setObjectName("button_divide")
 
         self.button_fact = QtWidgets.QPushButton(self.frame)
-        self.button_fact.setGeometry(QtCore.QRect(4, 144, 70, 50))
+        self.button_fact.setGeometry(QtCore.QRect(224, 144, 70, 50))
         self.button_fact.setFont(font)
         self.button_fact.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.button_fact.setObjectName("button_fact")
 
         self.button_root = QtWidgets.QPushButton(self.frame)
-        self.button_root.setGeometry(QtCore.QRect(76, 144, 70, 50))
+        self.button_root.setGeometry(QtCore.QRect(76, 196, 70, 50))
         self.button_root.setFont(font)
         self.button_root.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.button_root.setObjectName("button_root")
 
         self.button_sroot = QtWidgets.QPushButton(self.frame)
-        self.button_sroot.setGeometry(QtCore.QRect(148, 144, 70, 50))
+        self.button_sroot.setGeometry(QtCore.QRect(148, 196, 70, 50))
         self.button_sroot.setFont(font)
         self.button_sroot.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.button_sroot.setObjectName("button_sroot")
 
         self.n_button_sign = QtWidgets.QPushButton(self.frame)
-        self.n_button_sign.setGeometry(QtCore.QRect(4, 356, 70, 50))
+        self.n_button_sign.setGeometry(QtCore.QRect(4, 408, 70, 50))
         self.n_button_sign.setFont(font)
         self.n_button_sign.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_sign.setObjectName("n_button_sign")
 
+        self.n_button_dot = QtWidgets.QPushButton(self.frame)
+        self.n_button_dot.setGeometry(QtCore.QRect(148, 408, 70, 50))
+        self.n_button_dot.setObjectName("n_button_dot")
         self.n_button_comma = QtWidgets.QPushButton(self.frame)
-        self.n_button_comma.setGeometry(QtCore.QRect(148, 356, 70, 50))
+        self.n_button_comma.setGeometry(QtCore.QRect(148, 408, 70, 50))
         self.n_button_comma.setFont(font)
         self.n_button_comma.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_comma.setObjectName("n_button_comma")
         
-        self.button_parent = QtWidgets.QPushButton(self.frame)
-        self.button_parent.setGeometry(QtCore.QRect(148, 92, 70, 50))
-        self.button_parent.setFont(font)
-        self.button_parent.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.button_parent.setObjectName("button_parent")
+        self.button_parent_o = QtWidgets.QPushButton(self.frame)
+        self.button_parent_o.setGeometry(QtCore.QRect(76, 92, 70, 50))
+        self.button_parent_o.setFont(font)
+        self.button_parent_o.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.button_parent_o.setObjectName("button_parent_o")
+
+        self.button_parent_c = QtWidgets.QPushButton(self.frame)
+        self.button_parent_c.setGeometry(QtCore.QRect(148, 92, 70, 50))
+        self.button_parent_c.setFont(font)
+        self.button_parent_c.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.button_parent_c.setObjectName("button_parent_c")
+
+        self.button_ms = QtWidgets.QPushButton(self.frame)
+        self.button_ms.setGeometry(QtCore.QRect(76, 144, 70, 50))
+        self.button_ms.setFont(font)
+        self.button_ms.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.button_ms.setObjectName("button_mem_set")
+
+        self.button_mc = QtWidgets.QPushButton(self.frame)
+        self.button_mc.setGeometry(QtCore.QRect(148, 144, 70, 50))
+        self.button_mc.setFont(font)
+        self.button_mc.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.button_mc.setObjectName("button_mem_clear")
+
+        self.button_ml = QtWidgets.QPushButton(self.frame)
+        self.button_ml.setGeometry(QtCore.QRect(4, 144, 70, 50))
+        self.button_ml.setFont(font)
+        self.button_ml.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.button_ml.setObjectName("button_mem_load")
 
         self.button_random = QtWidgets.QPushButton(self.frame)
-        self.button_random.setGeometry(QtCore.QRect(76, 92, 70, 50))
+        self.button_random.setGeometry(QtCore.QRect(4, 196, 70, 50))
         self.button_random.setFont(font)
         self.button_random.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.button_random.setObjectName("button_random")
@@ -194,7 +221,7 @@ class Ui_MainWindow(object):
         self.button_ce.setObjectName("button_ce")        
 
         self.equal_button = QtWidgets.QPushButton(self.frame)
-        self.equal_button.setGeometry(QtCore.QRect(224, 356, 70, 50))
+        self.equal_button.setGeometry(QtCore.QRect(224, 408, 70, 50))
         font.setPointSize(30)
         self.equal_button.setFont(font)
         self.equal_button.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -292,7 +319,14 @@ class Ui_MainWindow(object):
 
         self.n_button_sign.clicked.connect(lambda: self.ChangeSign())   # TODO! sign
         self.n_button_comma.clicked.connect(lambda: self.aDecPoint())
-        self.button_parent.clicked.connect(lambda: self.aParenthesis())     # TODO! ?? idk či takto :D
+        self.n_button_dot.clicked.connect(lambda: self.aDecPoint())
+        self.button_parent_o.clicked.connect(lambda: self.aParenthesis())     # TODO!       ### toto si musíš prerobiť
+        self.button_parent_c.clicked.connect(lambda: self.aParenthesis())     # TODO!       ### Zmenilo sa to na parent_o (parent open "(" ), parent_c (parent close ")" )
+        
+        self.button_ms.clicked.connect(lambda: self.xxxx())                 # TODO!     ###
+        self.button_mc.clicked.connect(lambda: self.xxxx())                 # TODO!     ###
+        self.button_ml.clicked.connect(lambda: self.xxxx())                 # TODO!     ###
+
         self.button_random.clicked.connect(lambda: self.sText("rnd("))
 
         self.button_delete.clicked.connect(lambda: self.BackSpace())   # TODO! delete (Backspace)
@@ -353,11 +387,26 @@ class Ui_MainWindow(object):
         self.n_button_sign.setShortcut(_translate("MainWindow", "s"))
         self.n_button_sign.setToolTip("Change sign")
         self.n_button_comma.setText(_translate("MainWindow", "."))
-        self.n_button_comma.setShortcut(_translate("MainWindow", "."))      # TODO? vymyslieť aby fungovalo . aj ,
+        self.n_button_comma.setShortcut(_translate("MainWindow", "."))
+        self.n_button_dot.setShortcut(_translate("MainWindow", ","))
         self.n_button_comma.setToolTip("Decimal point")
-        self.button_parent.setText(_translate("MainWindow", "()"))
-        self.button_parent.setShortcut(_translate("MainWindow", "("))       # TODO? vymyslieť aby fungovalo ( aj )
-        self.button_parent.setToolTip("Open parenthesis")
+        self.button_parent_o.setText(_translate("MainWindow", "("))
+        self.button_parent_o.setShortcut(_translate("MainWindow", "("))
+        self.button_parent_o.setToolTip("Open parenthesis")
+        self.button_parent_c.setText(_translate("MainWindow", ")"))
+        self.button_parent_c.setShortcut(_translate("MainWindow", ")"))
+        self.button_parent_c.setToolTip("Close parenthesis")
+
+        self.button_ms.setText(_translate("MainWindow", "MS"))
+        self.button_ms.setShortcut(_translate("MainWindow", "b"))           ### TODO? skratky možno zmeniť ?
+        self.button_ms.setToolTip("Memory store")
+        self.button_mc.setText(_translate("MainWindow", "MC"))
+        self.button_mc.setShortcut(_translate("MainWindow", "n"))           ### ?
+        self.button_mc.setToolTip("Memory clear")
+        self.button_ml.setText(_translate("MainWindow", "ML"))
+        self.button_ml.setShortcut(_translate("MainWindow", "m"))           ### ?
+        self.button_ml.setToolTip("Memory load")
+
         self.button_random.setText(_translate("MainWindow", "RND"))
         self.button_random.setShortcut(_translate("MainWindow", "r"))
         self.button_random.setToolTip("Random number from x to y")
