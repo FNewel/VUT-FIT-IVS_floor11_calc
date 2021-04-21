@@ -12,10 +12,45 @@ from calc_gui import Ui_MainWindow
 
 class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     print("-- Main --") #! Debug printout
-    
-    # Simple text append # TODO toto bude inak vyzerať
+
+    # Variable holds text displayed on main display
+    md_text = ""
+
+    #Binary operators
+    bin_ops = {'+', '-', '/', '*', '^'}
+
+    #Unary operators
+    un_ops = {'√(', '!('}
+
     def sText(self, text):
         self.main_display.setText(text)
+
+    # Append a number
+    def aNum(self, n):
+        self.md_text += n
+        self.main_display.setText(self.md_text)
+
+    # Append binary operator
+    def aBinOp(self, op):
+        if self.md_text != "":
+            if self.md_text[-1] not in self.bin_ops:
+                self.md_text += op
+                self.main_display.setText(self.md_text)
+            else:
+                self.md_text = self.md_text[:-1]
+                self.md_text += op
+                self.main_display.setText(self.md_text)
+        else:
+            self.md_text = op
+            self.main_display.setText(self.md_text)
+
+    # Append unary operator #TODO: Do not allow unary operators inside one another
+    def aUnOp(self, op):
+        if self.md_text == "" or self.md_text[-1] in self.bin_ops:
+            self.md_text += op
+            self.main_display.setText(self.md_text)
+
+
 
     # Function for UI color change (dark/white)
     def sColor(self, dark):
