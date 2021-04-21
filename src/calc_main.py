@@ -1,3 +1,8 @@
+## @file calc_main.py
+# @author Martin Talajka
+# @date 21.4.2021
+# @brief The main logic of the calculator
+
 import sys
 import qtmodern.styles  # from https://github.com/gmarull/qtmodern
 
@@ -19,3 +24,5 @@ if __name__ == "__main__":
 
     MainWindow.show()
     sys.exit(app.exec_())
+
+# End of file calc_main.py
