@@ -269,6 +269,40 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        # Button connection with Calculator logic (calc_main.py)
+        self.n_button_0.clicked.connect(lambda: self.sText("0"))
+        self.n_button_1.clicked.connect(lambda: self.sText("1"))
+        self.n_button_2.clicked.connect(lambda: self.sText("2"))
+        self.n_button_3.clicked.connect(lambda: self.sText("3"))
+        self.n_button_4.clicked.connect(lambda: self.sText("4"))
+        self.n_button_5.clicked.connect(lambda: self.sText("5"))
+        self.n_button_6.clicked.connect(lambda: self.sText("6"))
+        self.n_button_7.clicked.connect(lambda: self.sText("7"))
+        self.n_button_8.clicked.connect(lambda: self.sText("8"))
+        self.n_button_9.clicked.connect(lambda: self.sText("9"))
+
+        self.button_plus.clicked.connect(lambda: self.sText("+"))
+        self.button_minus.clicked.connect(lambda: self.sText("-"))
+        self.button_multiply.clicked.connect(lambda: self.sText("*"))
+        self.button_divide.clicked.connect(lambda: self.sText("/"))
+
+        self.button_fact.clicked.connect(lambda: self.sText("!"))
+        self.button_root.clicked.connect(lambda: self.sText("^"))
+        self.button_sroot.clicked.connect(lambda: self.sText("√"))
+
+        self.n_button_sign.clicked.connect(lambda: self.sText("???"))   # TODO! sign
+        self.n_button_comma.clicked.connect(lambda: self.sText("."))
+        self.button_parent.clicked.connect(lambda: self.sText("("))     # TODO! ?? idk či takto :D
+        self.button_random.clicked.connect(lambda: self.sText("rnd("))
+
+        self.button_delete.clicked.connect(lambda: self.sText("???"))   # TODO! delete (Backspace)
+        self.button_ce.clicked.connect(lambda: self.sText("???"))       # TODO! delete (CE)
+        
+        self.equal_button.clicked.connect(lambda: self.sText("="))
+
+
+
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "F11 Calculator"))
