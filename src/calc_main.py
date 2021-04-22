@@ -161,8 +161,8 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 i += 1
         
         i=0
-        positions = self.findAllPositions("\(\*|\*\)", self.md_text) # Fixes "(*" and "*)" input to "(" and ")"
-        if positions:
+        positions = self.findAllPositions("\(\*|\*\)|\(/|/\)|\(\+|\+\)", self.md_text) # Fixes "(op" and "op)" input to "(" and ")"
+        if positions:                                                
             for pos in positions:
                 if self.md_text[pos+i] == "(":
                     self.md_text = self.md_text[:pos+i+1] + self.md_text[pos+i+2:]
