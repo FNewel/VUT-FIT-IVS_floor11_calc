@@ -317,17 +317,17 @@ class Ui_MainWindow(object):
         self.button_root.clicked.connect(lambda: self.aBinOp("^"))
         self.button_sroot.clicked.connect(lambda: self.aUnOp("√("))
 
-        self.n_button_sign.clicked.connect(lambda: self.ChangeSign())   # TODO! sign
+        self.n_button_sign.clicked.connect(lambda: self.ChangeSign())   
         self.n_button_comma.clicked.connect(lambda: self.aDecPoint())
         self.n_button_dot.clicked.connect(lambda: self.aDecPoint())
-        self.button_parent_o.clicked.connect(lambda: self.aParenthesis())     # TODO!       ### toto si musíš prerobiť
-        self.button_parent_c.clicked.connect(lambda: self.aParenthesis())     # TODO!       ### Zmenilo sa to na parent_o (parent open "(" ), parent_c (parent close ")" )
+        self.button_parent_o.clicked.connect(lambda: self.aParenthesis("("))     
+        self.button_parent_c.clicked.connect(lambda: self.aParenthesis(")"))     
         
-        self.button_ms.clicked.connect(lambda: self.xxxx())                 # TODO!     ###
-        self.button_mc.clicked.connect(lambda: self.xxxx())                 # TODO!     ###
-        self.button_ml.clicked.connect(lambda: self.xxxx())                 # TODO!     ###
+        self.button_ms.clicked.connect(lambda: self.MemSet())                
+        self.button_mc.clicked.connect(lambda: self.MemClear())                 
+        self.button_ml.clicked.connect(lambda: self.MemLoad())                 
 
-        self.button_random.clicked.connect(lambda: self.sText("rnd("))
+        self.button_random.clicked.connect(lambda: self.aUnOp("rnd("))
 
         self.button_delete.clicked.connect(lambda: self.BackSpace())   # TODO! delete (Backspace)
         self.button_ce.clicked.connect(lambda: self.ClearEverything())       # TODO! delete (CE)

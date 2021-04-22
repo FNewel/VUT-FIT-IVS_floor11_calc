@@ -16,17 +16,21 @@ from calc_gui import Ui_MainWindow
 class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     print("-- Main --") #! Debug printout
 
-    # Variable holds text displayed on main display
-    md_text = ""
+    def __init__(self):
+        super().__init__()
+        # Displayed text
+        self.md_text = "" # Main display
+        self.sd_text = "" # Secondary display
+        # Symbols
+        self.bin_ops = {'+', '-', '/', '*', '^'}
+        self.un_ops = {'√', '!'}    # rnd( excluded
+        self.parentheses = {'(',')'}
+        self.open_par = 0
+        # Is decimal point set in this number
+        self.dec_p = False
+        # Memory
+        self.memory = "" 
 
-    #Symbols
-    bin_ops = {'+', '-', '/', '*', '^'}
-    un_ops = {'√', '!'}
-    parentheses = {'(',')'}
-    open_par = 0
-
-    #Is decimal point set in this number
-    dec_p = False
 
     def sText(self, text):
         self.main_display.setText(text)
@@ -39,7 +43,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     # Append binary operator
     def aBinOp(self, op):
         if self.md_text != "":
-            if self.md_text[-1].isdigit() or self.md_text[-1] == ")":
+            if self.md_text[-1] not in self.bin_ops:
                 self.md_text += op
                 self.main_display.setText(self.md_text)
                 self.dec_p = False
@@ -51,10 +55,9 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # Append unary operator 
     def aUnOp(self, op):
-        if self.md_text == "" or self.md_text[-1] in self.bin_ops:
-            self.md_text += op
-            self.main_display.setText(self.md_text)
-            self.open_par +=1
+        self.md_text += op
+        self.main_display.setText(self.md_text)
+        self.open_par +=1
 
     #Append decimal point
     def aDecPoint(self):
@@ -71,11 +74,19 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     #Delete last character (2 if last is factorial or root)
     def BackSpace(self):
         if self.md_text != "":
-            if len(self.md_text) > 1 and self.md_text[-2] in self.un_ops:
+            if len(self.md_text) > 3 and self.md_text[-4: -1:] == "rnd":
+                self.md_text = self.md_text[:-4]
+                self.open_par -= 1
+            elif len(self.md_text) > 1 and self.md_text[-2] in self.un_ops:
                 self.md_text = self.md_text[:-2]
+                self.open_par -= 1
             else:
                 if self.md_text[-1] == ".":
                     self.dec_p = False
+                if self.md_text[-1] == "(":
+                    self.open_par -= 1
+                if self.md_text[-1] == ")":
+                    self.open_par += 1
                 self.md_text = self.md_text[:-1]
             self.main_display.setText(self.md_text)
 
@@ -97,16 +108,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.open_par = 0
         self.main_display.setText(self.md_text)
 
-
-    # Opens Guide PDF on a specific system (Windows/Linux)
-    def oPDF_g(self):
-        srcDir = os.path.dirname(os.path.realpath(__file__))
-        pdf_path = srcDir + os.path.sep + 'CalcGuide.pdf'
-        if platform.system() == "Windows":
-            os.startfile(pdf_path)
-        elif platform.system() == "Linux":
-            os.system('xdg-open \"{}\"'.format(pdf_path))
-
     #Change sign of number
     def ChangeSign(self):
         if self.md_text.isnumeric() or self.md_text == "":
@@ -124,6 +125,22 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             os.startfile(pdf_path)
         elif platform.system() == "Linux":
             os.system('xdg-open \"{}\"'.format(pdf_path))
+
+    # Stores text on main display to memory
+    def MemSet(self):
+        self.memory = self.md_text
+
+    # Loads text from memory to main display (if not empty)
+    def MemLoad(self):
+        if self.memory != "":
+            self.md_text = self.memory
+            self.main_display.setText(self.md_text)
+    
+    # Clears the memory
+    def MemClear(self):
+        self.memory = ""
+
+        
 
     # Function for UI color change (dark/white)
     def sColor(self, dark):
