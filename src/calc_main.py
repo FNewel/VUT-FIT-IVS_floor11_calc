@@ -4,6 +4,7 @@
 # @brief The main logic of the calculator
 
 import os
+import re
 import sys
 import platform
 import mathlib
@@ -70,7 +71,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.dec_p = True
 
     # Delete last character (2 if last is factorial or root)
-    def BackSpace(self):
+    def backSpace(self):
         if self.md_text != "":
             if len(self.md_text) > 3 and self.md_text[-4: -1:] == "rnd":
                 self.md_text = self.md_text[:-4]
@@ -100,14 +101,14 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             self.open_par -= 1
 
     # Clear both main and secondary displays
-    def ClearEverything(self):
+    def clearEverything(self):
         self.md_text = ""
         self.dec_p = False
         self.open_par = 0
         self.main_display.setText(self.md_text)
 
     # Change sign of number
-    def ChangeSign(self):
+    def changeSign(self):
         if self.md_text.isnumeric() or self.md_text == "":
             self.md_text = "-" + self.md_text
             self.main_display.setText(self.md_text)
@@ -125,18 +126,67 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             os.system('xdg-open \"{}\"'.format(pdf_path))
 
     # Stores text on main display to memory
-    def MemSet(self):
+    def memSet(self):
         self.memory = self.md_text
 
     # Loads text from memory to main display (if not empty)
-    def MemLoad(self):
+    def memLoad(self):
         if self.memory != "":
             self.md_text = self.memory
             self.main_display.setText(self.md_text)
     
     # Clears the memory
-    def MemClear(self):
+    def memClear(self):
         self.memory = ""
+
+    # Calculates the result
+    def calculate(self):
+        self.repairInput()
+        self.sd_text = self.md_text
+        self.h_display.setText(self.sd_text)
+        self.open_par = 0
+
+    def repairInput(self):
+        if self.open_par != 0: # Closes open parentheses
+            for i in range(0, self.open_par):
+                self.md_text += ")"
+
+        i = 0
+        positions = self.findAllPositions("\d\(|\)\d", self.md_text) # Fixes "N(" and ")N" input to "N*(" and ")*N"
+        if positions:
+            for pos in positions:
+                tmp = "*" + self.md_text[(pos+i+1):]
+                self.md_text = self.md_text[:-(len(self.md_text)-(pos+i+1))]
+                self.md_text += tmp
+                i += 1
+        
+        i=0
+        positions = self.findAllPositions("\(\*|\*\)", self.md_text) # Fixes "(*" and "*)" input to "(" and ")"
+        if positions:
+            for pos in positions:
+                if self.md_text[pos+i] == "(":
+                    self.md_text = self.md_text[:pos+i+1] + self.md_text[pos+i+2:]
+                else:
+                    self.md_text = self.md_text[:pos+i] + self.md_text[pos+i+1:]
+                i-= 1
+    
+    def findAllPositions(self, pattern, str):
+        found = re.findall(pattern, self.md_text)
+        positions = []
+        if found:
+            pos = 0
+            for c in found:
+                pos = str.find(c, pos)
+                if pos == -1:
+                    break
+                positions.append(pos)
+                pos += len(c)
+        return positions
+
+
+
+        
+
 
         
 

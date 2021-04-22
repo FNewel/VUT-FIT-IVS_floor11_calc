@@ -317,22 +317,22 @@ class Ui_MainWindow(object):
         self.button_root.clicked.connect(lambda: self.aBinOp("^"))
         self.button_sroot.clicked.connect(lambda: self.aUnOp("√("))
 
-        self.n_button_sign.clicked.connect(lambda: self.ChangeSign())   
+        self.n_button_sign.clicked.connect(lambda: self.changeSign())   
         self.n_button_comma.clicked.connect(lambda: self.aDecPoint())
         self.n_button_dot.clicked.connect(lambda: self.aDecPoint())
         self.button_parent_o.clicked.connect(lambda: self.aParenthesis("("))     
         self.button_parent_c.clicked.connect(lambda: self.aParenthesis(")"))     
         
-        self.button_ms.clicked.connect(lambda: self.MemSet())                
-        self.button_mc.clicked.connect(lambda: self.MemClear())                 
-        self.button_ml.clicked.connect(lambda: self.MemLoad())                 
+        self.button_ms.clicked.connect(lambda: self.memSet())                
+        self.button_mc.clicked.connect(lambda: self.memClear())                 
+        self.button_ml.clicked.connect(lambda: self.memLoad())                 
 
         self.button_random.clicked.connect(lambda: self.aUnOp("rnd("))
 
-        self.button_delete.clicked.connect(lambda: self.BackSpace())   
-        self.button_ce.clicked.connect(lambda: self.ClearEverything()) 
+        self.button_delete.clicked.connect(lambda: self.backSpace())   
+        self.button_ce.clicked.connect(lambda: self.clearEverything()) 
         
-        self.equal_button.clicked.connect(lambda: self.sText("="))
+        self.equal_button.clicked.connect(lambda: self.calculate())
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
