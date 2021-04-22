@@ -4,7 +4,6 @@
 # @brief The main logic of the calculator
 
 import os
-from os import MFD_ALLOW_SEALING
 import sys
 import platform
 import mathlib
@@ -14,7 +13,6 @@ from PyQt5 import QtWidgets
 from calc_gui import Ui_MainWindow
 
 class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
-    print("-- Main --") #! Debug printout
 
     def __init__(self):
         super().__init__()
@@ -59,7 +57,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.main_display.setText(self.md_text)
         self.open_par +=1
 
-    #Append decimal point
+    # Append decimal point
     def aDecPoint(self):
         if self.dec_p == False:
             if self.md_text != "" and self.md_text[-1].isdigit():
@@ -71,7 +69,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.main_display.setText(self.md_text)
                 self.dec_p = True
 
-    #Delete last character (2 if last is factorial or root)
+    # Delete last character (2 if last is factorial or root)
     def BackSpace(self):
         if self.md_text != "":
             if len(self.md_text) > 3 and self.md_text[-4: -1:] == "rnd":
@@ -90,7 +88,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.md_text = self.md_text[:-1]
             self.main_display.setText(self.md_text)
 
-    #Append parenthesis
+    # Append parenthesis
     def aParenthesis(self, text):
         if text == "(":
             self.md_text += text
@@ -101,14 +99,14 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             self.main_display.setText(self.md_text)
             self.open_par -= 1
 
-    #Clear both main and secondary displays
+    # Clear both main and secondary displays
     def ClearEverything(self):
         self.md_text = ""
         self.dec_p = False
         self.open_par = 0
         self.main_display.setText(self.md_text)
 
-    #Change sign of number
+    # Change sign of number
     def ChangeSign(self):
         if self.md_text.isnumeric() or self.md_text == "":
             self.md_text = "-" + self.md_text
@@ -148,7 +146,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             # Dark Style Sheet
             qtmodern.styles.dark(app)
             self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
-                                     "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
+                                     "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255) }"
                                      "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
                                      "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
                                      "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
@@ -161,7 +159,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             # White Style Sheet
             qtmodern.styles.light(app)
             self.frame.setStyleSheet("QFrame { background-color: rgb(243, 243, 243) }"
-                                     "QLineEdit { background-color: rgb(220, 220, 220); border-style: outset; border-width: 0px; color: rgb(0, 0, 0)}"
+                                     "QLineEdit { background-color: rgb(220, 220, 220); border-style: outset; border-width: 0px; color: rgb(0, 0, 0) }"
                                      "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: black }"
                                      "QPushButton[objectName^=\"n\"] { background-color: rgb(252, 252, 252) }"
                                      "QPushButton[objectName^=\"e\"] { background-color: rgb(200, 200, 200); font: 30pt \"Noto Mono\" }"

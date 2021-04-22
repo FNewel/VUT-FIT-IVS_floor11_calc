@@ -329,8 +329,8 @@ class Ui_MainWindow(object):
 
         self.button_random.clicked.connect(lambda: self.aUnOp("rnd("))
 
-        self.button_delete.clicked.connect(lambda: self.BackSpace())   # TODO! delete (Backspace)
-        self.button_ce.clicked.connect(lambda: self.ClearEverything())       # TODO! delete (CE)
+        self.button_delete.clicked.connect(lambda: self.BackSpace())   
+        self.button_ce.clicked.connect(lambda: self.ClearEverything()) 
         
         self.equal_button.clicked.connect(lambda: self.sText("="))
 
