@@ -84,16 +84,19 @@ def root(n,x):
         return x ** (1/n)
 
 ## @brief Producing a random number in a given range
-# @exception ValueError if @p b <= @p a
-# @exception TypeError if @p a and @p b are fractions
-# @return Random number from range <a,b>
-def rng(a,b):
-    if b <= a:
+# @exception ValueError if @p x == 0
+# @exception TypeError if @p x is a fraction
+# @return Random number from range <0,x>
+def rng(x):
+    if x == 0:
         raise ValueError
-    if (a % 1 != 0) or (b % 1 != 0):
+    if (x % 1 != 0):
         raise TypeError
 
-    return randint(a,b)
+    if x > 0:
+        return randint(0,x)
+    if x < 0:
+        return randint(x,0)
 
 
 

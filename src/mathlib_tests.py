@@ -212,36 +212,25 @@ class TestRNG(unittest.TestCase):
 
     def test_rng(self):
 
-        #Test a and b not integers
-        self.assertRaises(TypeError, mathlib.rng, 10, 15.6)
-        self.assertRaises(TypeError, mathlib.rng, 10.5, 15)
-        self.assertRaises(TypeError, mathlib.rng, 10.5, 15.6)
+        #Test x not integer
+        self.assertRaises(TypeError, mathlib.rng, 15.6)
+        self.assertRaises(TypeError, mathlib.rng, 10.5)
 
-        #Test b < a
-        self.assertRaises(ValueError, mathlib.rng, 20,10)
-        self.assertRaises(ValueError, mathlib.rng, 3,2)
+        #Test x == 0
+        self.assertRaises(ValueError, mathlib.rng, 0)
 
-        #Test a = b
-        self.assertRaises(ValueError, mathlib.rng, 5,5)
-        self.assertRaises(ValueError, mathlib.rng, 0,0)
 
         #Test positive interval, should return integer
-        self.assertEqual((mathlib.rng(0, 20) % 1), 0)
-        self.assertTrue(0 <= (mathlib.rng(0,20)) <= 20)
-        self.assertEqual((mathlib.rng(50,120) % 1), 0)
-        self.assertTrue(50 <= (mathlib.rng(50,120)) <= 120)
+        self.assertEqual((mathlib.rng(10) % 1), 0)
+        self.assertTrue(0 <= (mathlib.rng(10)) <= 10)
+        self.assertEqual((mathlib.rng(50) % 1), 0)
+        self.assertTrue(0 <= (mathlib.rng(50)) <= 50)
 
         #Test negative interval, should return integer
-        self.assertEqual((mathlib.rng(-20, 0) % 1), 0)
-        self.assertTrue(-20 <= (mathlib.rng(-20, 0)) <= 0)
-        self.assertEqual((mathlib.rng(-120, -50) % 1), 0)
-        self.assertTrue(-120 <= (mathlib.rng(-120, -50)) <= -50)
-
-        #Test negative-positive interval, should return integer
-        self.assertEqual((mathlib.rng(-20, 30) % 1), 0)
-        self.assertTrue(-20 <= (mathlib.rng(-20, 30)) <= 30)
-        self.assertEqual((mathlib.rng(-120, 50) % 1), 0)
-        self.assertTrue(-120 <= (mathlib.rng(-120, 50)) <= 50)
+        self.assertEqual((mathlib.rng(-20) % 1), 0)
+        self.assertTrue(-20 <= (mathlib.rng(-20)) <= 0)
+        self.assertEqual((mathlib.rng(-50) % 1), 0)
+        self.assertTrue(-50 <= (mathlib.rng(-50)) <= 0)
                  
 
 if __name__ == '__main__':

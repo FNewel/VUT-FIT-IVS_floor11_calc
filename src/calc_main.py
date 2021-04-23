@@ -7,6 +7,8 @@ import os
 import re
 import sys
 import platform
+
+from PyQt5.QtCore import dec
 import mathlib
 import qtmodern.styles  # from https://github.com/gmarull/qtmodern
 
@@ -159,8 +161,14 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                     result = self.calculateString(v)
                     tmp = self.md_text[k+len(v)+2:]
                     self.md_text = self.md_text[:k] + str(result) + tmp
-            print(self.md_text)
-
+            
+            self.md_text = self.calculateString(self.md_text)
+            self.main_display.setText(self.md_text)
+            self.open_par = 0
+            if not "." in self.md_text:
+                self.dec_p = False
+            else:
+                self.dec_p = True
         
             
 
@@ -191,6 +199,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 else:
                     self.md_text = self.md_text[:pos+i] + self.md_text[pos+i+1:]
                 i-= 1
+
     
     # Finds all positions of found patterns in string and returns them in a list
     def findAllPositions(self, pattern, str):
@@ -219,7 +228,44 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def calculateString(self, text):
-        return eval(text)
+        print(text)
+        
+        result = self.calcRnd(text)
+        
+        print("Before eval: " + result)
+        result = eval(result)
+        print("After eval: " + str(result))
+        return str(result)
+
+
+    def calcRnd(self, text):
+        tmp = ""
+        rnd = text.find("r")
+        rnd_num = ""
+        i = 0
+        if rnd >= 0: # If rnd is present
+            rnd += 3
+            if rnd >= len(text):
+                tmp = mathlib.rng(100)
+            else:
+                while(text[rnd+i].isdigit() or text[rnd+i] == "." or (i == 0) and text[rnd] == "-"):
+                    rnd_num += text[rnd+i]
+                    i += 1
+                    if (rnd + i) >= len(text):
+                        print(text)
+                        print(rnd+i)
+                        print(len(text))
+                        break
+                if "." in rnd_num:
+                    print("no floats in rng") #TODO: ERROR
+
+                elif rnd_num == "":
+                    tmp = mathlib.rng(100)
+                else:
+                    tmp = mathlib.rng(int(rnd_num))
+            
+            text = text[:rnd-3] + str(tmp) + text[rnd + len(rnd_num):]
+        return text
 
 
         
