@@ -164,13 +164,13 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                     tmp = self.md_text[k+len(v)+2:]
                     self.md_text = self.md_text[:k] + str(result) + tmp
             
-            self.md_text = self.calculateString(self.md_text)
-            self.main_display.setText(self.md_text)
-            self.open_par = 0
-            if not "." in self.md_text:
-                self.dec_p = False
-            else:
-                self.dec_p = True
+        self.md_text = self.calculateString(self.md_text)
+        self.main_display.setText(self.md_text)
+        self.open_par = 0
+        if not "." in self.md_text:
+            self.dec_p = False
+        else:
+            self.dec_p = True
         
             
 
@@ -228,20 +228,19 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 pairs[open_pars.pop()] = i
         return pairs
 
-
+    # Function caculates a string
     def calculateString(self, text):
-        print(text)
         
         text = self.calcRnd(text)
         text = self.calcFact(text)
         text = self.calcRoot(text)
-        
-        print("Before eval: " + text)
-        #result = eval(result)
-        print("After eval: " + str(text))
+        text = self.calcExp(text)
+        text = self.calcMulDiv(text)
+        text = self.calcPlusMin(text)
+
         return str(text)
 
-
+    # Function calculates rnd() (if there is one)
     def calcRnd(self, text):
         tmp = ""
         rnd = text.find("r")
@@ -271,6 +270,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             text = text[:rnd-3] + str(tmp) + text[rnd + len(rnd_num):]
         return text
 
+    # Function calculates factorial (if there is one)
     def calcFact(self, text):
         tmp = ""
         fact_pos = text.find("!")
@@ -302,6 +302,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             text = text[:fact_pos-1] + str(tmp) + text[fact_pos + len(str(fact_num)):]
         return text
 
+    # Function calculates root (if there is one)
     def calcRoot(self, text):
         tmp = ""
         root_pos = text.find("√")
@@ -353,7 +354,165 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             text = text[:root_pos-1-len(str(root_lvl))] + str(tmp) + text[root_pos + len(str(root_num)):]
         return text
 
-    # Handles error printing onto the main display
+    # Function calculates exponent in expression (if there is one) #TODO: Loop it 
+    def calcExp(self, text):
+        tmp = ""
+        root_pos = text.find("^")
+        exp_n = ""
+        exp_x = ""
+        i = 0
+        if root_pos >= 0:
+            root_pos += 1
+            if root_pos >= len(text):
+                tmp = ""
+            else:
+                while (text[root_pos+i].isdigit() or text[root_pos+i] == "." or (i == 0) and text[root_pos] == "-"):
+                    exp_n += text[root_pos+i]
+                    i += 1
+                    if (root_pos + i) >= len(text):
+                        break
+                if exp_n == "":
+                    tmp = ""
+                else:
+                    try:
+                        exp_n = int(exp_n)
+                    except ValueError:
+                        exp_n = float(exp_n)
+                i = -2
+                if (root_pos + i) < 0:
+                    exp_x = 2
+                else: 
+                    while (text[root_pos+i].isdigit() or text[root_pos+i] == "."):
+                        exp_x += text[root_pos+i]
+                        i -= 1
+                        if (root_pos + i) < 0:
+                            break
+                if exp_x == "":
+                    exp_x = 2
+                else:
+                    exp_x = exp_x[::-1]
+                try:
+                    exp_x = int(exp_x)
+                except ValueError:
+                    exp_x = float(exp_x)
+                try:
+                    tmp = mathlib.exp(exp_x, exp_n)
+                except ValueError:
+                    self.errorHandler("exp_n_neg")
+                except TypeError:
+                    self.errorHandler("n_float")
+
+            text = text[:root_pos-1-len(str(exp_x))] + str(tmp) + text[root_pos + len(str(exp_n)):]
+        return text
+
+    # Function calculates multiplications and divisions in expression (if there are any)
+    def calcMulDiv(self, text):
+        while(text.find("*") >= 0 or text.find("/") >= 0):
+            left_num = ""
+            right_num = ""
+            for char in text:
+                if char == "*" or char == "/":
+                    pos = text.find(char)
+                    break
+            i = 1
+            while (text[pos+i].isdigit() or text[pos+i] == "." or (i == 0) and text[pos] == "-"):
+                right_num += text[pos+i]
+                i += 1
+                if (pos + i) >= len(text):
+                    break
+            try:
+                right_num = int(right_num)
+            except:
+                right_num = float(right_num)
+            
+            i = -1
+            while (text[pos+i].isdigit() or text[pos+i] == "." or text[pos+i] == "-"):
+                if text[pos+i] == "-":
+                    if(pos+i == 0) or (not text[pos+i-1].isdigit()):
+                        left_num += text[pos+i]
+                    else:
+                        break
+                else:
+                    left_num += text[pos+i]
+                    i -= 1
+                    if (pos + i) < 0:
+                        break
+                    left_num = left_num[::-1]
+                try:
+                    left_num = int(left_num)
+                except:
+                    left_num = float(left_num)
+            if text[pos] == "/":
+                try:
+                    tmp = mathlib.div(left_num, right_num)
+                except ZeroDivisionError:
+                    self.errorHandler("div_zero")
+            if text[pos] == "*":
+                tmp = mathlib.mul(left_num, right_num)
+
+            text = text[:pos-len(str(left_num))] + str(tmp) + text[pos + 1 + len(str(right_num)):]
+            
+        return text
+
+    # Function calculates additions and subtractions (if there are any)
+    def calcPlusMin(self, text):
+        while(text.find("+") >= 0 or text[1:].find("-") >= 0):
+            print("TEXT: " + text)
+            left_num = ""
+            right_num = ""
+            pos = 0
+            i = 1
+            for char in text[1:]:
+                if char == "+" or char == "-":
+                    print(text.find(char))
+                    pos = text[1:].find(char)
+                    pos += 1
+                    break
+            if pos == 0:
+                break
+            print("POS: " + str(pos))
+            while (text[pos+i].isdigit() or text[pos+i] == "." or (i == 0) and text[pos] == "-"):
+                right_num += text[pos+i]
+                i += 1
+                if (pos + i) >= len(text):
+                    break
+            try:
+                right_num = int(right_num)
+            except:
+                right_num = float(right_num)
+            
+            i = -1
+            while (text[pos+i].isdigit() or text[pos+i] == "." or text[pos+i] == "-"):
+                if text[pos+i] == "-":
+                    if(pos+i == 0) or (not text[pos+i-1].isdigit()):
+                        left_num += text[pos+i]
+                    else:
+                        break
+                else:
+                    left_num += text[pos+i]
+                i -= 1
+                if (pos + i) < 0:
+                    break
+            left_num = left_num[::-1]
+            try:
+                left_num = int(left_num)
+            except:
+                left_num = float(left_num)
+            if text[pos] == "+":
+                print(str(left_num) + "+" + str(right_num))
+                tmp = mathlib.add(left_num, right_num)
+            if text[pos] == "-":
+                print(str(left_num) + "-" + str(right_num))
+                tmp = mathlib.sub(left_num, right_num)
+
+            print("LEFT: " + text[:pos-len(str(left_num))])
+            print("RESULT: " + str(tmp))
+            print("RIGHT: " + text[pos + 1 + len(str(right_num)):])
+            text = text[:pos-len(str(left_num))] + str(tmp) + text[pos + 1 + len(str(right_num)):]
+            
+        return text
+
+    # Handles error printing onto the main display #TODO: Unfinished function, so far only prints the errcode to console
     def errorHandler(self, err_msg):
         print(err_msg)
 
