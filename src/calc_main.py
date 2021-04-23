@@ -12,6 +12,7 @@ import qtmodern.styles  # from https://github.com/gmarull/qtmodern
 
 from PyQt5 import QtWidgets
 from calc_gui import Ui_MainWindow
+from collections import OrderedDict
 
 class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
@@ -144,15 +145,35 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.repairInput()
         self.sd_text = self.md_text
         self.h_display.setText(self.sd_text)
-        self.open_par = 0
 
+        #1. Solve parentheses
+        while "(" in self.md_text:
+            par_pairs = self.findParPairs(self.md_text)
+            par_strings = {}
+            for k ,v in par_pairs.items():
+                par_strings[k] = self.md_text[k+1:v]
+
+            par_strings = OrderedDict(reversed(list(par_strings.items())))
+            for k, v in par_strings.items():
+                if not "(" in v:
+                    result = self.calculateString(v)
+                    tmp = self.md_text[k+len(v)+2:]
+                    self.md_text = self.md_text[:k] + str(result) + tmp
+            print(self.md_text)
+
+        
+            
+
+
+    # Repairs any syntax errors still present in the input string
     def repairInput(self):
         if self.open_par != 0: # Closes open parentheses
             for i in range(0, self.open_par):
                 self.md_text += ")"
 
+        # Fixes "N(" and ")N" input to "N*(" and ")*N"
         i = 0
-        positions = self.findAllPositions("\d\(|\)\d", self.md_text) # Fixes "N(" and ")N" input to "N*(" and ")*N"
+        positions = self.findAllPositions("\d\(|\)\d", self.md_text)
         if positions:
             for pos in positions:
                 tmp = "*" + self.md_text[(pos+i+1):]
@@ -160,8 +181,9 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.md_text += tmp
                 i += 1
         
+        # Fixes "(op" and "op)" input to "(" and ")"
         i=0
-        positions = self.findAllPositions("\(\*|\*\)|\(/|/\)|\(\+|\+\)", self.md_text) # Fixes "(op" and "op)" input to "(" and ")"
+        positions = self.findAllPositions("\(\*|\*\)|\(/|/\)|\(\+|\+\)|\(^|^\)", self.md_text)
         if positions:                                                
             for pos in positions:
                 if self.md_text[pos+i] == "(":
@@ -170,8 +192,9 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.md_text = self.md_text[:pos+i] + self.md_text[pos+i+1:]
                 i-= 1
     
+    # Finds all positions of found patterns in string and returns them in a list
     def findAllPositions(self, pattern, str):
-        found = re.findall(pattern, self.md_text)
+        found = re.findall(pattern, str)
         positions = []
         if found:
             pos = 0
@@ -183,6 +206,20 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 pos += len(c)
         return positions
 
+    # Returns parenthesis pairs from text
+    def findParPairs(self, text):
+        open_pars = [] 
+        pairs = {}
+        for i, c in enumerate(text):
+            if c == '(':
+                open_pars.append(i)
+            if c == ')':
+                pairs[open_pars.pop()] = i
+        return pairs
+
+
+    def calculateString(self, text):
+        return eval(text)
 
 
         
