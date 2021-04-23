@@ -106,9 +106,11 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     # Clear both main and secondary displays
     def clearEverything(self):
         self.md_text = ""
+        self.sd_text = ""
         self.dec_p = False
         self.open_par = 0
         self.main_display.setText(self.md_text)
+        self.h_display.setText(self.sd_text)
 
     # Change sign of number
     def changeSign(self):
@@ -230,12 +232,14 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     def calculateString(self, text):
         print(text)
         
-        result = self.calcRnd(text)
+        text = self.calcRnd(text)
+        text = self.calcFact(text)
+        text = self.calcRoot(text)
         
-        print("Before eval: " + result)
-        result = eval(result)
-        print("After eval: " + str(result))
-        return str(result)
+        print("Before eval: " + text)
+        #result = eval(result)
+        print("After eval: " + str(text))
+        return str(text)
 
 
     def calcRnd(self, text):
@@ -252,21 +256,106 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                     rnd_num += text[rnd+i]
                     i += 1
                     if (rnd + i) >= len(text):
-                        print(text)
-                        print(rnd+i)
-                        print(len(text))
                         break
-                if "." in rnd_num:
-                    print("no floats in rng") #TODO: ERROR
 
-                elif rnd_num == "":
+                if rnd_num == "":
                     tmp = mathlib.rng(100)
                 else:
-                    tmp = mathlib.rng(int(rnd_num))
+                    try:
+                        tmp = mathlib.rng(int(rnd_num))
+                    except ValueError:
+                        self.errorHandler("RNGzero")
+                    except TypeError:
+                        self.errorHandler("RNGfloat")
             
             text = text[:rnd-3] + str(tmp) + text[rnd + len(rnd_num):]
         return text
 
+    def calcFact(self, text):
+        tmp = ""
+        fact_pos = text.find("!")
+        fact_num = ""
+        i = 0
+        if fact_pos >= 0:
+            fact_pos += 1
+            if fact_pos >= len(text):
+                tmp = ""
+            else:
+                while (text[fact_pos+i].isdigit() or text[fact_pos+i] == "." or (i == 0) and text[fact_pos] == "-"):
+                    fact_num += text[fact_pos+i]
+                    i += 1
+                    if (fact_pos + i) >= len(text):
+                        break
+                if fact_num == "":
+                    tmp = ""
+                else:
+                    try:
+                        fact_num = int(fact_num)
+                    except ValueError:
+                        fact_num = float(fact_num)
+                    try:
+                        tmp = mathlib.fact(fact_num)
+                    except ValueError:
+                        self.errorHandler("fact_neg")
+                    except TypeError:
+                        self.errorHandler("fact_float")
+            text = text[:fact_pos-1] + str(tmp) + text[fact_pos + len(str(fact_num)):]
+        return text
+
+    def calcRoot(self, text):
+        tmp = ""
+        root_pos = text.find("√")
+        root_num = ""
+        root_lvl = ""
+        i = 0
+        if root_pos >= 0:
+            root_pos += 1
+            if root_pos >= len(text):
+                tmp = ""
+            else:
+                while (text[root_pos+i].isdigit() or text[root_pos+i] == "." or (i == 0) and text[root_pos] == "-"):
+                    root_num += text[root_pos+i]
+                    i += 1
+                    if (root_pos + i) >= len(text):
+                        break
+                if root_num == "":
+                    tmp = ""
+                else:
+                    try:
+                        root_num = int(root_num)
+                    except ValueError:
+                        root_num = float(root_num)
+                i = -2
+                if (root_pos + i) < 0:
+                    root_lvl = 2
+                else: 
+                    while (text[root_pos+i].isdigit() or text[root_pos+i] == "."):
+                        root_lvl += text[root_pos+i]
+                        i -= 1
+                        if (root_pos + i) < 0:
+                            break
+                if root_lvl == "":
+                    root_lvl = 2
+                else:
+                    root_lvl = root_lvl[::-1]
+                try:
+                    root_lvl = int(root_lvl)
+                except ValueError:
+                    root_lvl = float(root_lvl)
+                try:
+                    tmp = mathlib.root(root_lvl, root_num)
+                except ValueError:
+                    self.errorHandler("root_bad_n")
+                except TypeError:
+                    self.errorHandler("root_n_float")
+                except ZeroDivisionError:
+                    self.errorHandler("root_n_zero")
+            text = text[:root_pos-1-len(str(root_lvl))] + str(tmp) + text[root_pos + len(str(root_num)):]
+        return text
+
+    # Handles error printing onto the main display
+    def errorHandler(self, err_msg):
+        print(err_msg)
 
         
 
