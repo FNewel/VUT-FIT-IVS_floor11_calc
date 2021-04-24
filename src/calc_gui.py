@@ -314,7 +314,7 @@ class Ui_MainWindow(object):
 
         self.lVersion = QtWidgets.QLabel(self.pWin)
         self.lVersion.setGeometry(QtCore.QRect(180, 250, 80, 15))
-        self.lVersion.setText("Version 0.0.1")
+        self.lVersion.setText("Version 1.0.0")
 
         # Menu entry - Information
         self.actionInformation = QtWidgets.QAction(MainWindow)
