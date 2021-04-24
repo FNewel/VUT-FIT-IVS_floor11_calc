@@ -33,7 +33,9 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         # Memory
         self.memory = ""
         # Error flag
-        self.Error = False
+        self.error = False
+        # Displaying result from previous equation
+        self.result = False
 
 
     def sText(self, text):
@@ -41,11 +43,15 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # Append a number
     def aNum(self, n):
-        self.md_text += n
+        if self.result:
+            self.result = False
+            self.md_text = ""
+        self.md_text += n 
         self.main_display.setText(self.md_text)
 
     # Append binary operator
     def aBinOp(self, op):
+        self.result = False
         if self.md_text != "":
             if self.md_text[-1] not in self.bin_ops:
                 self.md_text += op
@@ -59,12 +65,18 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # Append unary operator 
     def aUnOp(self, op):
+        if self.result:
+            self.result = False
+            self.md_text = ""
         self.md_text += op
         self.main_display.setText(self.md_text)
         self.open_par +=1
 
     # Append decimal point
     def aDecPoint(self):
+        if self.result:
+            self.result = False
+            self.md_text = ""
         if self.dec_p == False:
             if self.md_text != "" and self.md_text[-1].isdigit():
                 self.md_text += "."
@@ -77,6 +89,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # Delete last character (2 if last is factorial or root)
     def backSpace(self):
+        self.result = False
         if self.md_text != "":
             if len(self.md_text) > 3 and self.md_text[-4: -1:] == "rnd":
                 self.md_text = self.md_text[:-4]
@@ -96,6 +109,9 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # Append parenthesis
     def aParenthesis(self, text):
+        if self.result:
+            self.result = False
+            self.md_text = ""
         if text == "(":
             self.md_text += text
             self.main_display.setText(self.md_text)
@@ -111,11 +127,13 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.sd_text = ""
         self.dec_p = False
         self.open_par = 0
+        self.result = False
         self.main_display.setText(self.md_text)
         self.h_display.setText(self.sd_text)
 
     # Change sign of number
     def changeSign(self):
+        self.result = False
         if self.md_text.isnumeric() or self.md_text == "":
             self.md_text = "-" + self.md_text
             self.main_display.setText(self.md_text)
@@ -164,19 +182,25 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             for k, v in par_strings.items():
                 if not "(" in v:
                     result = self.calculateString(v)
-                    if self.Error:
-                        self.Error = False
+                    if self.error:
+                        self.error = False
                         self.md_text = ""
                         return
                     tmp = self.md_text[k+len(v)+2:]
                     self.md_text = self.md_text[:k] + str(result) + tmp
 
         self.md_text = self.calculateString(self.md_text)
-        if self.Error:
+        if self.error:
             self.md_text = ""
-            self.Error = False
+            self.error = False
+            return
+        self.repairOutput()
+        if self.error:
+            self.md_text = ""
+            self.error = False
             return
         self.main_display.setText(self.md_text)
+        self.result = True
         self.open_par = 0
         if not "." in self.md_text:
             self.dec_p = False
@@ -189,9 +213,38 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # Repairs any syntax errors still present in the input string
     def repairInput(self):
-        if self.open_par != 0: # Closes open parentheses
+        
+        # Closes open parentheses
+        if self.open_par != 0: 
             for i in range(0, self.open_par):
                 self.md_text += ")"
+
+        # Removes leading and trailing zeroes
+        positions = self.findAllPositions("\d+", self.md_text)
+        numbers = re.findall("\d+", self.md_text)
+        pos_num = {}
+        for i in range(0, len(positions)):
+            pos_num[positions[i]] = numbers[i]
+        pos_num = dict(reversed(list(pos_num.items())))
+        if pos_num: 
+            for pos, string in pos_num.items():
+                if pos - 1 >= 0 and self.md_text[pos-1] == ".":
+                    new_string = string.rstrip("0")
+                    if new_string == "":
+                        self.md_text = self.md_text[:pos-1] + self.md_text[pos+len(string):]
+                    else:
+                        self.md_text = self.md_text[:pos] + new_string + self.md_text[pos+len(string):]
+                else:
+                    new_string = int(string)
+                    new_string = str(new_string)
+                    self.md_text = self.md_text[:pos] + new_string + self.md_text[pos+len(string):]
+
+        # Turns N.NaN into N
+        positions = self.findAllPositions("\.", self.md_text)
+        positions.reverse()
+        for pos in positions:
+            if (pos + 1 >= len(self.md_text)) or (not self.md_text[pos + 1].isdigit()):
+                self.md_text = self.md_text[:pos] + self.md_text[pos+1:]
 
         # Fixes "N(" and ")N" input to "N*(" and ")*N"
         i = 0
@@ -213,6 +266,10 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 else:
                     self.md_text = self.md_text[:pos+i] + self.md_text[pos+i+1:]
                 i-= 1
+        
+        
+
+
         
     
     # Finds all positions of found patterns in string and returns them in a list
@@ -244,27 +301,27 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     def calculateString(self, text):
         
         text = self.calcRnd(text)
-        if self.Error:
+        if self.error:
             return
 
         text = self.calcFact(text)
-        if self.Error:
+        if self.error:
             return
 
         text = self.calcRoot(text)
-        if self.Error:
+        if self.error:
             return
 
         text = self.calcExp(text)
-        if self.Error:
+        if self.error:
             return
 
         text = self.calcMulDiv(text)
-        if self.Error:
+        if self.error:
             return
 
         text = self.calcPlusMin(text)
-        if self.Error:
+        if self.error:
             return
 
         return str(text)
@@ -417,7 +474,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             pos = 0
             for char in text[1:]:
                 if char == "+" or char == "-":
-                    print(text.find(char))
                     pos = text[1:].find(char)
                     pos += 1
                     break
@@ -433,10 +489,8 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 return
 
             if text[pos] == "+":
-                print(str(left_num) + "+" + str(right_num))
                 tmp = mathlib.add(left_num, right_num)
             if text[pos] == "-":
-                print(str(left_num) + "-" + str(right_num))
                 tmp = mathlib.sub(left_num, right_num)
 
             text = text[:pos-len(str(left_num))] + str(tmp) + text[pos + 1 + len(str(right_num)):]
@@ -448,8 +502,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     def getLeftOperand(self, text, pos):
         left_op = ""
         i = -1
-        print("TEXT_LEFT " + text)
-        print("POS_LEFT " + str(pos))
         if pos + i < 0:
             return left_op
         while (text[pos+i].isdigit() or text[pos+i] == "." or text[pos+i] == "-"):
@@ -465,7 +517,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 break
         left_op = left_op[::-1]
 
-        print("LEFT_OP: " + left_op)
 
         try:
             left_op = int(left_op)
@@ -481,18 +532,14 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     def getRightOperand(self,text,pos):
         right_op = ""
         i = 1
-        print("TEXT_RIGHT " + text)
-        print("POS_RIGHT " + str(pos))
         if pos + i >= len(text):
             return right_op
         while (text[pos+i].isdigit() or text[pos+i] == "." or ((i == 1) and text[pos+i] == "-")):
-            print("HEREEEEE")
             right_op += text[pos+i]
             i += 1
             if (pos + i) >= len(text):
                 break
 
-        print("RIGHT OP: " + right_op)
         try:
             right_op = int(right_op)
         except:
@@ -504,7 +551,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return right_op
 
 
-    # Handles error printing onto the main display #TODO: Unfinished function, so far only prints the errcode to console
+    # Handles error printing onto the main display
     def errorHandler(self, err_msg):
         self.md_text = err_msg
         self.sd_text = ""
@@ -512,14 +559,19 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.h_display.setText(self.sd_text)
         self.open_par = 0
         self.dec_p = False
-        self.Error = True
+        self.error = True
         return
 
-
-        
-
-
-        
+    def repairOutput(self):
+        result = 0
+        try:
+            result = float(self.md_text)
+        except ValueError:
+            self.errorHandler("ERR_out_NaN")
+        result = round(result, 6)
+        if result % 1 == 0:
+            result = int(result)
+        self.md_text = str(result)
 
     # Function for UI color change (dark/white)
     def sColor(self, dark):
