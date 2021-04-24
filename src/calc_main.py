@@ -389,7 +389,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             if root_num == "":
                 self.errorHandler("ERR_root_no_num")
                 return
-        
+
             try:
                 tmp = mathlib.root(root_lvl, root_num)
             except ValueError:
@@ -475,7 +475,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             if "e" in text:
                 self.errorHandler("ERR_num_range")
                 return
-                
+
             left_num = ""
             right_num = ""
             pos = 0
