@@ -8,7 +8,6 @@ import re
 import sys
 import platform
 
-from PyQt5.QtCore import dec, left, right
 import mathlib
 import qtmodern.styles  # from https://github.com/gmarull/qtmodern
 
@@ -16,17 +15,18 @@ from PyQt5 import QtWidgets
 from calc_gui import Ui_MainWindow
 from collections import OrderedDict
 
+
 class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
         # Displayed text
-        self.md_text = "" # Main display
-        self.sd_text = "" # Secondary display
+        self.md_text = ""   # Main display
+        self.sd_text = ""   # Secondary display
         # Symbols
         self.bin_ops = {'+', '-', '/', '*', '^'}
         self.un_ops = {'√', '!'}    # rnd( excluded
-        self.parentheses = {'(',')'}
+        self.parentheses = {'(', ')'}
         self.open_par = 0
         # Is decimal point set in this number
         self.dec_p = False
@@ -37,7 +37,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         # Displaying result from previous equation
         self.result = False
 
-
     def sText(self, text):
         self.main_display.setText(text)
 
@@ -47,7 +46,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             self.result = False
             self.dec_p = False
             self.md_text = ""
-        self.md_text += n 
+        self.md_text += n
         self.main_display.setText(self.md_text)
 
     # Append binary operator
@@ -64,7 +63,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.main_display.setText(self.md_text)
                 self.dec_p = False
 
-    # Append unary operator 
+    # Append unary operator
     def aUnOp(self, op):
         if self.result:
             self.result = False
@@ -72,7 +71,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             self.md_text = ""
         self.md_text += op
         self.main_display.setText(self.md_text)
-        self.open_par +=1
+        self.open_par += 1
 
     # Append decimal point
     def aDecPoint(self):
@@ -80,7 +79,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             self.result = False
             self.dec_p = False
             self.md_text = ""
-        if self.dec_p == False:
+        if self.dec_p is False:
             if self.md_text != "" and self.md_text[-1].isdigit():
                 self.md_text += "."
                 self.main_display.setText(self.md_text)
@@ -163,7 +162,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.memory != "":
             self.md_text = self.memory
             self.main_display.setText(self.md_text)
-    
+
     # Clears the memory
     def memClear(self):
         self.memory = ""
@@ -174,22 +173,22 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.sd_text = self.md_text
         self.h_display.setText(self.sd_text)
 
-        #1. Solve parentheses
+        # 1. Solve parentheses
         while "(" in self.md_text:
             par_pairs = self.findParPairs(self.md_text)
             par_strings = {}
-            for k ,v in par_pairs.items():
-                par_strings[k] = self.md_text[k+1:v]
+            for k, v in par_pairs.items():
+                par_strings[k] = self.md_text[k + 1:v]
 
             par_strings = OrderedDict(reversed(list(par_strings.items())))
             for k, v in par_strings.items():
-                if not "(" in v:
+                if "(" not in v:
                     result = self.calculateString(v)
                     if self.error:
                         self.error = False
                         self.md_text = ""
                         return
-                    tmp = self.md_text[k+len(v)+2:]
+                    tmp = self.md_text[k + len(v) + 2:]
                     self.md_text = self.md_text[:k] + str(result) + tmp
 
         self.md_text = self.calculateString(self.md_text)
@@ -205,20 +204,17 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.main_display.setText(self.md_text)
         self.result = True
         self.open_par = 0
-        if not "." in self.md_text:
+        if "." not in self.md_text:
             self.dec_p = False
         else:
             self.dec_p = True
         return
-        
-            
-
 
     # Repairs any syntax errors still present in the input string
     def repairInput(self):
-        
+
         # Closes open parentheses
-        if self.open_par != 0: 
+        if self.open_par != 0:
             for i in range(0, self.open_par):
                 self.md_text += ")"
 
@@ -229,52 +225,47 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         for i in range(0, len(positions)):
             pos_num[positions[i]] = numbers[i]
         pos_num = dict(reversed(list(pos_num.items())))
-        if pos_num: 
+        if pos_num:
             for pos, string in pos_num.items():
-                if pos - 1 >= 0 and self.md_text[pos-1] == ".":
+                if pos - 1 >= 0 and self.md_text[pos - 1] == ".":
                     new_string = string.rstrip("0")
                     if new_string == "":
-                        self.md_text = self.md_text[:pos-1] + self.md_text[pos+len(string):]
+                        self.md_text = self.md_text[:pos - 1] + self.md_text[pos + len(string):]
                     else:
-                        self.md_text = self.md_text[:pos] + new_string + self.md_text[pos+len(string):]
+                        self.md_text = self.md_text[:pos] + new_string + self.md_text[pos + len(string):]
                 else:
                     new_string = int(string)
                     new_string = str(new_string)
-                    self.md_text = self.md_text[:pos] + new_string + self.md_text[pos+len(string):]
+                    self.md_text = self.md_text[:pos] + new_string + self.md_text[pos + len(string):]
 
         # Turns N.NaN into N
         positions = self.findAllPositions("\.", self.md_text)
         positions.reverse()
         for pos in positions:
             if (pos + 1 >= len(self.md_text)) or (not self.md_text[pos + 1].isdigit()):
-                self.md_text = self.md_text[:pos] + self.md_text[pos+1:]
+                self.md_text = self.md_text[:pos] + self.md_text[pos + 1:]
 
         # Fixes "N(" and ")N" input to "N*(" and ")*N"
         i = 0
         positions = self.findAllPositions("\d\(|\)\d|\d!|\dr|\)\(", self.md_text)
         if positions:
             for pos in positions:
-                tmp = "*" + self.md_text[(pos+i+1):]
-                self.md_text = self.md_text[:-(len(self.md_text)-(pos+i+1))]
+                tmp = "*" + self.md_text[(pos + i + 1):]
+                self.md_text = self.md_text[:-(len(self.md_text) - (pos + i + 1))]
                 self.md_text += tmp
                 i += 1
-        
+
         # Fixes "(op" and "op)" input to "(" and ")"
-        i=0
+        i = 0
         positions = self.findAllPositions("\(\*|\*\)|\(/|/\)|\(\+|\+\)|\(^|^\)", self.md_text)
-        if positions:                                                
+        if positions:
             for pos in positions:
-                if self.md_text[pos+i] == "(":
-                    self.md_text = self.md_text[:pos+i+1] + self.md_text[pos+i+2:]
+                if self.md_text[pos + i] == "(":
+                    self.md_text = self.md_text[:pos + i + 1] + self.md_text[pos + i + 2:]
                 else:
-                    self.md_text = self.md_text[:pos+i] + self.md_text[pos+i+1:]
-                i-= 1
-        
-        
+                    self.md_text = self.md_text[:pos + i] + self.md_text[pos + i + 1:]
+                i -= 1
 
-
-        
-    
     # Finds all positions of found patterns in string and returns them in a list
     def findAllPositions(self, pattern, str):
         found = re.findall(pattern, str)
@@ -291,7 +282,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # Returns parenthesis pairs from text
     def findParPairs(self, text):
-        open_pars = [] 
+        open_pars = []
         pairs = {}
         for i, c in enumerate(text):
             if c == '(':
@@ -302,7 +293,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # Function caculates a string
     def calculateString(self, text):
-        
+
         text = self.calcRnd(text)
         if self.error:
             return
@@ -336,8 +327,8 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
             pos = text.find("r")
 
-            rnd_num = self.getRightOperand(text, pos + 2)     
-            
+            rnd_num = self.getRightOperand(text, pos + 2)
+
             if rnd_num == "":
                 tmp = mathlib.rng(100)
             else:
@@ -349,7 +340,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 except TypeError:
                     self.errorHandler("ERR_rnd_flt")
                     return
-                
+
             text = text[:pos] + str(tmp) + text[pos + 3 + len(str(rnd_num)):]
         return text
 
@@ -380,17 +371,17 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             root_num = ""
             root_lvl = ""
             implicit_root = False
-            
+
             pos = text.find("√")
 
-            root_num = self.getRightOperand(text,pos)
+            root_num = self.getRightOperand(text, pos)
 
-            root_lvl = self.getLeftOperand(text,pos)
+            root_lvl = self.getLeftOperand(text, pos)
 
             if root_lvl == "":
                 implicit_root = True
                 root_lvl = 2
-                
+
             try:
                 tmp = mathlib.root(root_lvl, root_num)
             except ValueError:
@@ -402,21 +393,21 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             except ZeroDivisionError:
                 self.errorHandler("ERR_root_n_zero")
                 return
-            
-            if implicit_root == True:
+
+            if implicit_root is True:
                 root_lvl = ""
 
-            text = text[:pos-len(str(root_lvl))] + str(tmp) + text[pos + 1 + len(str(root_num)):]
+            text = text[:pos - len(str(root_lvl))] + str(tmp) + text[pos + 1 + len(str(root_num)):]
         return text
 
-    # Function calculates exponent in expression (if there is one) #TODO: Loop it 
+    # Function calculates exponent in expression (if there is one)
     def calcExp(self, text):
         while(text.find("^") >= 0):
             exp_n = ""
             exp_x = ""
-            
+
             pos = text.find("^")
-            
+
             exp_n = self.getRightOperand(text, pos)
 
             exp_x = self.getLeftOperand(text, pos)
@@ -434,7 +425,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.errorHandler("ERR_n_flt")
                 return
 
-            text = text[:pos-len(str(exp_x))] + str(tmp) + text[pos + 1 + len(str(exp_n)):]
+            text = text[:pos - len(str(exp_x))] + str(tmp) + text[pos + 1 + len(str(exp_n)):]
         return text
 
     # Function calculates multiplications and divisions in expression (if there are any)
@@ -442,14 +433,14 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         while(text.find("*") >= 0 or text.find("/") >= 0):
             left_num = ""
             right_num = ""
-            
+
             for char in text:
                 if char == "*" or char == "/":
                     pos = text.find(char)
                     break
 
             right_num = self.getRightOperand(text, pos)
-            
+
             left_num = self.getLeftOperand(text, pos)
 
             if left_num == "" or right_num == "":
@@ -465,8 +456,8 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             if text[pos] == "*":
                 tmp = mathlib.mul(left_num, right_num)
 
-            text = text[:pos-len(str(left_num))] + str(tmp) + text[pos + 1 + len(str(right_num)):]
-            
+            text = text[:pos - len(str(left_num))] + str(tmp) + text[pos + 1 + len(str(right_num)):]
+
         return text
 
     # Function calculates additions and subtractions (if there are any)
@@ -482,9 +473,9 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                     break
             if pos == 0:
                 break
-            
+
             right_num = self.getRightOperand(text, pos)
-            
+
             left_num = self.getLeftOperand(text, pos)
 
             if left_num == "" or right_num == "":
@@ -496,30 +487,28 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             if text[pos] == "-":
                 tmp = mathlib.sub(left_num, right_num)
 
-            text = text[:pos-len(str(left_num))] + str(tmp) + text[pos + 1 + len(str(right_num)):]
-            
+            text = text[:pos - len(str(left_num))] + str(tmp) + text[pos + 1 + len(str(right_num)):]
+
         return text
 
-    
-    #Return the left operand of a binary function on position pos from text
+    # Return the left operand of a binary function on position pos from text
     def getLeftOperand(self, text, pos):
         left_op = ""
         i = -1
         if pos + i < 0:
             return left_op
-        while (text[pos+i].isdigit() or text[pos+i] == "." or text[pos+i] == "-"):
-            if text[pos+i] == "-":
-                if(pos+i == 0) or (not text[pos+i-1].isdigit()):
-                    left_op += text[pos+i]
+        while (text[pos + i].isdigit() or text[pos + i] == "." or text[pos + i] == "-"):
+            if text[pos + i] == "-":
+                if(pos + i == 0) or (not text[pos + i - 1].isdigit()):
+                    left_op += text[pos + i]
                 else:
                     break
             else:
-                left_op += text[pos+i]
+                left_op += text[pos + i]
             i -= 1
             if (pos + i) < 0:
                 break
         left_op = left_op[::-1]
-
 
         try:
             left_op = int(left_op)
@@ -532,13 +521,13 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return left_op
 
     # Return the right operand of a binary function on position pos from text
-    def getRightOperand(self,text,pos):
+    def getRightOperand(self, text, pos):
         right_op = ""
         i = 1
         if pos + i >= len(text):
             return right_op
-        while (text[pos+i].isdigit() or text[pos+i] == "." or ((i == 1) and text[pos+i] == "-")):
-            right_op += text[pos+i]
+        while (text[pos + i].isdigit() or text[pos + i] == "." or ((i == 1) and text[pos + i] == "-")):
+            right_op += text[pos + i]
             i += 1
             if (pos + i) >= len(text):
                 break
@@ -550,9 +539,8 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 right_op = float(right_op)
             except:
                 right_op = ""
-        
-        return right_op
 
+        return right_op
 
     # Handles error printing onto the main display
     def errorHandler(self, err_msg):
@@ -590,7 +578,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                                      "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
                                      "QPushButton:hover { background-color: rgb(122, 122, 122) }"
                                      "QPushButton:pressed { background-color: rgb(135, 135, 135) }"
-                                    )
+                                     )
         else:
             # White Style Sheet
             qtmodern.styles.light(app)
@@ -603,13 +591,14 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                                      "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
                                      "QPushButton:hover { background-color: rgb(235, 235, 235) }"
                                      "QPushButton:pressed { background-color: rgb(255, 255, 255) }"
-                                    )
+                                     )
+
 
 if __name__ == "__main__":
-    
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    
+
     ui = calcLogic()
     ui.setupUi(MainWindow)
 
