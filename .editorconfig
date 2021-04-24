@@ -1,0 +1,9 @@
+# File is in root
+root = true
+
+[*.py]
+indent_style = space
+indent_size = 4
+
+[Makefile]
+indent_style = tab

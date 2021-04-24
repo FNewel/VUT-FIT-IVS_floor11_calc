@@ -353,6 +353,10 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
             fact_num = self.getRightOperand(text, pos)
 
+            if fact_num == "":
+                self.errorHandler("ERR_fact_no_num")
+                return
+
             try:
                 tmp = mathlib.fact(fact_num)
             except ValueError:
@@ -382,6 +386,10 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 implicit_root = True
                 root_lvl = 2
 
+            if root_num == "":
+                self.errorHandler("ERR_root_no_num")
+                return
+        
             try:
                 tmp = mathlib.root(root_lvl, root_num)
             except ValueError:
@@ -463,6 +471,11 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     # Function calculates additions and subtractions (if there are any)
     def calcPlusMin(self, text):
         while(text.find("+") >= 0 or text[1:].find("-") >= 0):
+
+            if "e" in text:
+                self.errorHandler("ERR_num_range")
+                return
+                
             left_num = ""
             right_num = ""
             pos = 0

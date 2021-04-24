@@ -1,0 +1,3 @@
+soubor skutecnost.txt, který bude obsahovat informace o rozdílech mezi plánem projektu a skutečností,
+
+http://ivs.fit.vutbr.cz/projekt-2_tymova_spoluprace2020-21.html#sekceStrukturaRepozitare
