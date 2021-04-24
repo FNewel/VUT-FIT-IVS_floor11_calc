@@ -45,6 +45,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     def aNum(self, n):
         if self.result:
             self.result = False
+            self.dec_p = False
             self.md_text = ""
         self.md_text += n 
         self.main_display.setText(self.md_text)
@@ -67,6 +68,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     def aUnOp(self, op):
         if self.result:
             self.result = False
+            self.dec_p = False
             self.md_text = ""
         self.md_text += op
         self.main_display.setText(self.md_text)
@@ -76,6 +78,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     def aDecPoint(self):
         if self.result:
             self.result = False
+            self.dec_p = False
             self.md_text = ""
         if self.dec_p == False:
             if self.md_text != "" and self.md_text[-1].isdigit():
@@ -111,6 +114,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     def aParenthesis(self, text):
         if self.result:
             self.result = False
+            self.dec_p = False
             self.md_text = ""
         if text == "(":
             self.md_text += text
@@ -167,7 +171,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     # Calculates the result
     def calculate(self):
         self.repairInput()
-        print("AFTER REPAIR " + self.md_text)
         self.sd_text = self.md_text
         self.h_display.setText(self.sd_text)
 
