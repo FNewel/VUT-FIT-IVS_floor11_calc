@@ -15,6 +15,7 @@
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         # Set MainWindow name and size
@@ -25,7 +26,7 @@ class Ui_MainWindow(object):
         # Set icon for MainWindow
         srcDir = os.path.dirname(os.path.realpath(__file__))
         MainWindow.setWindowIcon(QtGui.QIcon(srcDir + os.path.sep + 'Calc_icon.ico'))
-        
+
         # Set frame name, size and style
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -36,21 +37,20 @@ class Ui_MainWindow(object):
         self.frame.setMinimumSize(QtCore.QSize(300, 470))
         self.frame.setMaximumSize(QtCore.QSize(300, 470))
         self.frame.setStyleSheet("QFrame { background-color: rgb(49, 54, 59) }"
-                                "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
-                                "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
-                                "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
-                                "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
-                                "QPushButton[objectName^=\"b\"] { background-color: rgb(68, 68, 68) }"
-                                "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
-                                "QPushButton:hover { background-color: rgb(122, 122, 122) }"
-                                "QPushButton:pressed { background-color: rgb(135, 135, 135) }"
-                                )
+                                 "QLineEdit { background-color: rgb(68, 68, 68); border-style: outset; border-width: 0px; color: rgb(255, 255, 255)}"
+                                 "QPushButton { border-style: outset;border-color: rgb(0, 0, 0); border-width: 1px; border-radius: 10px; color: white }"
+                                 "QPushButton[objectName^=\"n\"] { background-color: rgb(35, 35, 35) }"
+                                 "QPushButton[objectName^=\"e\"] { background-color: rgb(96, 96, 96); font: 30pt \"Noto Mono\" }"
+                                 "QPushButton[objectName^=\"b\"] { background-color: rgb(68, 68, 68) }"
+                                 "QPushButton#button_delete{ font: 30pt \"Noto Mono\" }"
+                                 "QPushButton:hover { background-color: rgb(122, 122, 122) }"
+                                 "QPushButton:pressed { background-color: rgb(135, 135, 135) }"
+                                 )
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
 
-        
-        # Set same font for all buttons
+        # Set same font for all buttons
         font = QtGui.QFont("Noto Mono", 20)
 
         # Set all buttons attributes - position, font, cursor change, name
@@ -131,7 +131,7 @@ class Ui_MainWindow(object):
         self.button_multiply.setFont(font)
         self.button_multiply.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.button_multiply.setObjectName("button_multiply")
-        
+
         self.button_divide = QtWidgets.QPushButton(self.frame)
         self.button_divide.setGeometry(QtCore.QRect(224, 196, 70, 50))
         self.button_divide.setFont(font)
@@ -162,15 +162,15 @@ class Ui_MainWindow(object):
         self.n_button_sign.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_sign.setObjectName("n_button_sign")
 
-        self.n_button_dot = QtWidgets.QPushButton(self.frame)
-        self.n_button_dot.setGeometry(QtCore.QRect(148, 408, 70, 50))
-        self.n_button_dot.setObjectName("n_button_dot")
+        self.n_button_h_dot = QtWidgets.QPushButton(self.frame)
+        self.n_button_h_dot.setGeometry(QtCore.QRect(148, 408, 70, 50))
+        self.n_button_h_dot.setObjectName("n_button_h_dot")
         self.n_button_comma = QtWidgets.QPushButton(self.frame)
         self.n_button_comma.setGeometry(QtCore.QRect(148, 408, 70, 50))
         self.n_button_comma.setFont(font)
         self.n_button_comma.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.n_button_comma.setObjectName("n_button_comma")
-        
+
         self.button_parent_o = QtWidgets.QPushButton(self.frame)
         self.button_parent_o.setGeometry(QtCore.QRect(76, 92, 70, 50))
         self.button_parent_o.setFont(font)
@@ -218,8 +218,11 @@ class Ui_MainWindow(object):
         self.button_ce.setGeometry(QtCore.QRect(4, 92, 70, 50))
         self.button_ce.setFont(font)
         self.button_ce.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.button_ce.setObjectName("button_ce")        
+        self.button_ce.setObjectName("button_ce")
 
+        self.h_equal_button = QtWidgets.QPushButton(self.frame)
+        self.h_equal_button.setGeometry(QtCore.QRect(224, 408, 70, 50))
+        self.h_equal_button.setObjectName("h_equal_button")
         self.equal_button = QtWidgets.QPushButton(self.frame)
         self.equal_button.setGeometry(QtCore.QRect(224, 408, 70, 50))
         font.setPointSize(30)
@@ -227,7 +230,7 @@ class Ui_MainWindow(object):
         self.equal_button.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.equal_button.setObjectName("equal_button")
 
-        # Create main display with all atributes
+        # Creates main display with all atributes
         self.main_display = QtWidgets.QLineEdit(self.frame)
         self.main_display.setGeometry(QtCore.QRect(4, 24, 290, 50))
         self.main_display.setMinimumSize(QtCore.QSize(290, 50))
@@ -238,7 +241,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont("Noto Sans", 22)
         self.main_display.setFont(font)
 
-        # Create 2nd display with all atributes
+        # Creates 2nd display with all atributes
         self.h_display = QtWidgets.QLineEdit(self.frame)
         self.h_display.setGeometry(QtCore.QRect(4, 4, 290, 20))
         self.h_display.setMinimumSize(QtCore.QSize(290, 20))
@@ -249,13 +252,13 @@ class Ui_MainWindow(object):
         font = QtGui.QFont("Noto Sans", 9)
         self.h_display.setFont(font)
 
-        # Create line under display
+        # Creates line under display
         self.line = QtWidgets.QFrame(self.frame)
         self.line.setGeometry(QtCore.QRect(6, 74, 285, 16))
         self.line.setFrameShape(QtWidgets.QFrame.HLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
 
-        # Create line in display, under main numbers
+        # Creates line in display, under main numbers
         self.line_2 = QtWidgets.QFrame(self.frame)
         self.line_2.setGeometry(QtCore.QRect(8, 62, 280, 1))
 
@@ -274,7 +277,7 @@ class Ui_MainWindow(object):
         self.actionDark_mode.setObjectName("actionDark_mode")
 
         # Change color to white/dark if button in menu is checked
-        self.actionDark_mode.toggled.connect(lambda c = self.actionDark_mode.toggle : self.sColor(c))
+        self.actionDark_mode.toggled.connect(lambda c=self.actionDark_mode.toggle: self.sColor(c))
 
         # Menu entry - Help
         self.actionHelp = QtWidgets.QAction(MainWindow)
@@ -283,9 +286,40 @@ class Ui_MainWindow(object):
         # Open help pdf
         self.actionHelp.triggered.connect(lambda: self.oPDF_g())
 
+        # Creates popup window with Information
+        self.pWin = QtWidgets.QMdiSubWindow()
+        self.pWin.setWindowTitle("Information")
+        self.pWin.setWindowIcon(QtGui.QIcon(srcDir + os.path.sep + 'Calc_icon.ico'))
+        self.pWin.setFixedSize(250, 270)
+
+        self.textPwin = QtWidgets.QTextBrowser(self.pWin)
+        self.textPwin.setGeometry(QtCore.QRect(0, 30, 250, 240))
+        self.textPwin.setOpenExternalLinks(True)
+        self.textPwin.setMarkdown("Basic mathematical calculator with GUI, mathematical operations, factorials,\n"
+                                  "roots, documentation, manual and math library.\n\n"
+                                  "**Authors:**\n\n"
+                                  "Martin Talajka - xtalaj00   - [FNewell](https://github.com/FNewel)                "
+                                  "Ondrej Kováč  - xkovac57 - [MasloJePotravina](https://github.com/MasloJePotravina)\n\n"
+                                  "**Build with:**\n"
+                                  "- Python\n"
+                                  "- PyQt\n\n"
+                                  "**Github:** [Floor11 Calculator](https://github.com/FNewel/floor11_calc)\n\n"
+                                  "**Distributed under the [GPL-3.0 License](https://github.com/FNewel/floor11_calc/blob/main/LICENSE)**")
+
+        self.lName = QtWidgets.QLabel(self.pWin)
+        self.lName.setGeometry(QtCore.QRect(5, 5, 245, 20))
+        font.setPointSize(20)
+        self.lName.setFont(font)
+        self.lName.setText("F11 Calculator")
+
+        self.lVersion = QtWidgets.QLabel(self.pWin)
+        self.lVersion.setGeometry(QtCore.QRect(180, 250, 80, 15))
+        self.lVersion.setText("Version 0.0.1")
+
         # Menu entry - Information
         self.actionInformation = QtWidgets.QAction(MainWindow)
         self.actionInformation.setObjectName("actionInformation")
+        self.actionInformation.triggered.connect(lambda: self.pWin.show())
 
         self.menuMenu.addAction(self.actionDark_mode)
         self.menuMenu.addSeparator()
@@ -317,27 +351,28 @@ class Ui_MainWindow(object):
         self.button_root.clicked.connect(lambda: self.aBinOp("^"))
         self.button_sroot.clicked.connect(lambda: self.aUnOp("√("))
 
-        self.n_button_sign.clicked.connect(lambda: self.changeSign())   
+        self.n_button_sign.clicked.connect(lambda: self.changeSign())
         self.n_button_comma.clicked.connect(lambda: self.aDecPoint())
-        self.n_button_dot.clicked.connect(lambda: self.aDecPoint())
-        self.button_parent_o.clicked.connect(lambda: self.aParenthesis("("))     
-        self.button_parent_c.clicked.connect(lambda: self.aParenthesis(")"))     
-        
-        self.button_ms.clicked.connect(lambda: self.memSet())                
-        self.button_mc.clicked.connect(lambda: self.memClear())                 
-        self.button_ml.clicked.connect(lambda: self.memLoad())                 
+        self.n_button_h_dot.clicked.connect(lambda: self.aDecPoint())
+        self.button_parent_o.clicked.connect(lambda: self.aParenthesis("("))
+        self.button_parent_c.clicked.connect(lambda: self.aParenthesis(")"))
+
+        self.button_ms.clicked.connect(lambda: self.memSet())
+        self.button_mc.clicked.connect(lambda: self.memClear())
+        self.button_ml.clicked.connect(lambda: self.memLoad())
 
         self.button_random.clicked.connect(lambda: self.aUnOp("rnd("))
 
-        self.button_delete.clicked.connect(lambda: self.backSpace())   
-        self.button_ce.clicked.connect(lambda: self.clearEverything()) 
-        
+        self.button_delete.clicked.connect(lambda: self.backSpace())
+        self.button_ce.clicked.connect(lambda: self.clearEverything())
+
         self.equal_button.clicked.connect(lambda: self.calculate())
+        self.h_equal_button.clicked.connect(lambda: self.calculate())
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "F11 Calculator"))
-        
+
         # Set buttons names and keyboard shortcuts
         self.n_button_0.setText(_translate("MainWindow", "0"))
         self.n_button_0.setShortcut(_translate("MainWindow", "0"))
@@ -359,7 +394,7 @@ class Ui_MainWindow(object):
         self.n_button_8.setShortcut(_translate("MainWindow", "8"))
         self.n_button_9.setText(_translate("MainWindow", "9"))
         self.n_button_9.setShortcut(_translate("MainWindow", "9"))
-        
+
         self.button_plus.setText(_translate("MainWindow", "+"))
         self.button_plus.setShortcut(_translate("MainWindow", "+"))
         self.button_plus.setToolTip("Plus")
@@ -382,13 +417,13 @@ class Ui_MainWindow(object):
         self.button_sroot.setText(_translate("MainWindow", "n√x"))
         self.button_sroot.setShortcut(_translate("MainWindow", "q"))
         self.button_sroot.setToolTip("n root of x")
-        
+
         self.n_button_sign.setText(_translate("MainWindow", "±"))
         self.n_button_sign.setShortcut(_translate("MainWindow", "s"))
         self.n_button_sign.setToolTip("Change sign")
         self.n_button_comma.setText(_translate("MainWindow", "."))
         self.n_button_comma.setShortcut(_translate("MainWindow", "."))
-        self.n_button_dot.setShortcut(_translate("MainWindow", ","))
+        self.n_button_h_dot.setShortcut(_translate("MainWindow", ","))
         self.n_button_comma.setToolTip("Decimal point")
         self.button_parent_o.setText(_translate("MainWindow", "("))
         self.button_parent_o.setShortcut(_translate("MainWindow", "("))
@@ -398,13 +433,13 @@ class Ui_MainWindow(object):
         self.button_parent_c.setToolTip("Close parenthesis")
 
         self.button_ms.setText(_translate("MainWindow", "MS"))
-        self.button_ms.setShortcut(_translate("MainWindow", "b"))           ### TODO? skratky možno zmeniť ?
+        self.button_ms.setShortcut(_translate("MainWindow", "Ctrl+S"))
         self.button_ms.setToolTip("Memory store")
         self.button_mc.setText(_translate("MainWindow", "MC"))
-        self.button_mc.setShortcut(_translate("MainWindow", "n"))           ### ?
+        self.button_mc.setShortcut(_translate("MainWindow", "Ctrl+C"))
         self.button_mc.setToolTip("Memory clear")
         self.button_ml.setText(_translate("MainWindow", "ML"))
-        self.button_ml.setShortcut(_translate("MainWindow", "m"))           ### ?
+        self.button_ml.setShortcut(_translate("MainWindow", "Ctrl+L"))
         self.button_ml.setToolTip("Memory load")
 
         self.button_random.setText(_translate("MainWindow", "RND"))
@@ -420,6 +455,7 @@ class Ui_MainWindow(object):
 
         self.equal_button.setText(_translate("MainWindow", "="))
         self.equal_button.setShortcut(_translate("MainWindow", "Enter"))
+        self.h_equal_button.setShortcut(_translate("MainWindow", "Return"))
         self.equal_button.setToolTip("Result")
 
         self.menuMenu.setTitle(_translate("MainWindow", "Menu"))
