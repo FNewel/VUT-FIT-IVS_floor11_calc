@@ -62,6 +62,10 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.md_text += op
                 self.main_display.setText(self.md_text)
                 self.dec_p = False
+        elif self.md_text == "" and op == "-":
+            self.md_text += op
+            self.main_display.setText(self.md_text)
+    
 
     # Append unary operator
     def aUnOp(self, op):
@@ -137,10 +141,10 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     # Change sign of number
     def changeSign(self):
         self.result = False
-        if self.md_text.isnumeric() or self.md_text == "":
+        if re.match(r'[0-9,. ]+$', self.md_text) or self.md_text == "":
             self.md_text = "-" + self.md_text
             self.main_display.setText(self.md_text)
-        elif self.md_text[0] == "-" and self.md_text[1:].isnumeric():
+        elif self.md_text[0] == "-" and re.match(r'[0-9,. ]+$', self.md_text[1:]):
             self.md_text = self.md_text[1:]
             self.main_display.setText(self.md_text)
 
