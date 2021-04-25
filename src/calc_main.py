@@ -21,41 +21,38 @@ from calc_gui import Ui_MainWindow
 from collections import OrderedDict
 
 ## @brief Class responsible for the logical aspect of the calculator
-# @param md_text Text displayed on the main display
-# @param sd_text Text displayed on the secondary (upper) display
-# @param bin_ops List of basic binary operands ('+','-','/','*','^')
-# @param un_ops List of "unary" operands (root,'!') (although root is more of a binary operand it behaves more like factorial)
-# @param parentheses List of parenthesis characters ('(',')')
-# @param open_par Number of open parentheses
-# @param dec_p Bool that keeps track of whether a decimal point can be placed
-# @param memory Variable stores a string that can later be loaded to the main display
-# @param error Bool that keeps track of whether an error has occured
-# @param result Bool that informs us about whether a result from previous calculation is currently being shown
 class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     ## @brief Default python initialization class used to initialize the variables to a starting state
     def __init__(self):
         super().__init__()
-        # Displayed text
-        self.md_text = ""   # Main display
-        self.sd_text = ""   # Secondary display
-        # Symbols
+
+        ## Text displayed on the main display
+        self.md_text = ""
+        ## Text displayed on the secondary (upper) display
+        self.sd_text = ""   
+
+        ## List of basic binary operands ('+','-','/','*','^')
         self.bin_ops = ['+', '-', '/', '*', '^']
+        ## List of "unary" operands (root,'!') (although root is more of a binary operand it behaves more like factorial)
         self.un_ops = ['√', '!']    # rnd( excluded
+        ## List of parenthesis characters ('(',')')
         self.parentheses = ['(', ')']
+        
+        ## Number of open parentheses
         self.open_par = 0
-        # Is decimal point set in this number
+        ## Bool that keeps track of whether a decimal point can be placed
         self.dec_p = False
-        # Memory
+        ## Variable stores a string that can later be loaded to the main display
         self.memory = ""
-        # Error flag
+        ## Bool that keeps track of whether an error has occured
         self.error = False
-        # Flag for displaying result from previous equation
+        ## Bool that informs us about whether a result from previous calculation is currently being shown
         self.result = False
 
 
     ## @brief Appends a number
-    # @param n Number that's being appended
+    # @param n Number that's being appendedn.
     def aNum(self, n):
         if self.result:
             self.result = False
@@ -84,7 +81,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     
 
     ## @brief Appends a unary operator
-    # @param op Operator taht's being appended
+    # @param op Operator that's being appended
     def aUnOp(self, op):
         if self.result:
             self.result = False
@@ -92,13 +89,14 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             self.md_text = ""
         self.md_text += op
         self.main_display.setText(self.md_text)
+        self.dec_p = False
         self.open_par += 1
 
     ## @brief Appends a decimal point
     def aDecPoint(self):
         if self.result:
             self.result = False
-            self.dec_p = False
+            self.dec_p = True
             self.md_text = ""
         if self.dec_p is False:
             if self.md_text != "" and self.md_text[-1].isdigit():
@@ -131,16 +129,17 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             self.main_display.setText(self.md_text)
 
     ## @brief Sppends parentheses
-    def aParenthesis(self, text):
+    # @param symb Symbol we are appending
+    def aParenthesis(self, symb):
         if self.result:
             self.result = False
             self.dec_p = False
             self.md_text = ""
-        if text == "(":
-            self.md_text += text
+        if symb == "(":
+            self.md_text += symb
             self.main_display.setText(self.md_text)
             self.open_par += 1
-        if text == ")" and self.open_par > 0:
+        if symb == ")" and self.open_par > 0:
             self.md_text += ")"
             self.main_display.setText(self.md_text)
             self.open_par -= 1
@@ -189,15 +188,12 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.memory = ""
 
     ## @brief Calculates the result of equation
-    # @param par_pairs Dictionary that holds indexes of pairs of parentheses that belong to each other
-    # @param par_strings Dictionary that holds indexes of strings between parentheses
     # @return no value
     def calculate(self):
         self.repairInput()
         self.sd_text = self.md_text
         self.h_display.setText(self.sd_text)
 
-        # 1. Solve parentheses
         while "(" in self.md_text:
             par_pairs = self.findParPairs(self.md_text)
             par_strings = {}
@@ -235,13 +231,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return
 
     ## @brief Repairs any syntax errors still present in the input string
-    # @param positions Keeps track of positions of sought strings
-    # @param numbers Keeps track of numbers for later removal of excess zeroes
-    # @param pos_num Dictionary that holds position-number pairs of numbers to be chcked for excess zeroes
-    # @param string Used for iterations, holds the number string for excess zero removal
-    # @param new_string Holds the new number after zeroes have been removed
-    # @param i Used as a counter for iterations
-    # @param tmp Temporary string holder
     def repairInput(self):
 
         # Closes open parentheses
@@ -300,8 +289,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     ## @brief Finds all positions of given patterns in string and returns them in a list
     # @param pattern Pattern the function is looking for
     # @param str String that's being searched for the sought pattern
-    # @param found List of strings that matched the sought pattern
-    # @param positions List of indexes of found strings
     # @return @p positions
     def findAllPositions(self, pattern, str):
         found = re.findall(pattern, str)
@@ -318,8 +305,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
     ## @brief Finds corresponding pairs of parentheses 
     # @param text Text that's being searched
-    # @param open_pairs List of positions of open parentheses
-    # @param pairs Dictionary of corresponding parentheses
     # @return @p pairs
     def findParPairs(self, text):
         open_pars = []
@@ -363,9 +348,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return str(text)
 
     ## @brief Finds all rnd() and assigns random numbers for each one in a given text (if there are any)
-    # @param rnd_num Number that's being passed to the mathlib.rng() function
-    # @param pos Position of the letter 'r' in the text
-    # @param tmp Temporary holds the result of rnd
+    # @param text Text in which we generate random numbers if instances of rnd() are present
     # @return @p text with all random numbers assigned
     def calcRnd(self, text):
         while(text.find("r") >= 0):
@@ -391,9 +374,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return text
 
     ## @brief Finds and calculates factorials in a given text (if there are any)
-    # @param fact_num Number that will be passed to the mathlib.fact() function
-    # @param pos Position of the symbol '!' in the text
-    # @param tmp Temporary holds the result of factorial
+    # @param text Text in which we calculate instances of factorial
     # @return @p text with all factorials calculated
     def calcFact(self, text):
         while(text.find("!") >= 0):
@@ -420,10 +401,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return text
 
     ## @brief Finds and calculates roots in a given text (if there are any)
-    # @param root_lvl First argument of the mathlib.root() function
-    # @param root_num Second argument of the mathlib.root() function
-    # @param pos Posiition of the root symbol in the text
-    # @param tmp Temporary holds the result of root
+    # @param text Text in which we calculate instances of root
     # @return @p text with all roots calculated
     def calcRoot(self, text):
         while(text.find("√") >= 0):
@@ -464,10 +442,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return text
 
     ## @brief Finds and calculates exponents in a given text (if there are any)
-    # @param exp_x First argument of the mathlib.exp() function (left operand)
-    # @param exp_n Second argument of the mathlib.exp() function (right operand)
-    # @param pos Posiition of the symbol '^' in the text
-    # @param tmp Temporary holds the result of exponent
+    # @param text Text in which we calculate instances of '^'
     # @return @p text with all exponents calculated
     def calcExp(self, text):
         while(text.find("^") >= 0):
@@ -497,10 +472,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return text
 
     ## @brief Finds and calculates multiplications and divisions in a given text (if there are any)
-    # @param left_num Left operand of the operation
-    # @param right_num Right operand of the operation
-    # @param pos Posiition of the symbol '*' or '/' in the text
-    # @param tmp Temporary holds the result of multiplication or division
+    # @param text Text in which we calculate instances of '*' and '/'
     # @return @p text with all multiplications and divisions calculated
     def calcMulDiv(self, text):
         while(text.find("*") >= 0 or text.find("/") >= 0):
@@ -534,10 +506,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return text
 
     ## @brief Finds and calculates additions and subtractions in a given text (if there are any)
-    # @param left_num Left operand of the operation
-    # @param right_num Right operand of the operation
-    # @param pos Posiition of the symbol '+' or '-' in the text
-    # @param tmp Temporary holds the result of addition or subtraction
+    # @param text Text in which we calculate instances of '+' and '-'
     # @return @p text with all additions and subtractions calculated
     def calcPlusMin(self, text):
         while(text.find("+") >= 0 or text[1:].find("-") >= 0):
@@ -577,8 +546,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     ## @brief Finds the left operand of an operation which is on a given position in a given text
     # @param text Text in which we are searching for the operand 
     # @param pos Position of the operand in the text
-    # @param left_op String that holds the operand
-    # @param i Counter for iterations
     # @return @p left_op
     def getLeftOperand(self, text, pos):
         left_op = ""
@@ -611,8 +578,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     ## @brief Finds the right operand of an operation which is on a given position in a given text
     # @param text Text in which we are searching for the operand 
     # @param pos Position of the operand in the text
-    # @param right_op String that holds the operand
-    # @param i Counter for iterations
     # @return @p right_op
     def getRightOperand(self, text, pos):
         right_op = ""
@@ -647,7 +612,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.error = True
 
     ## @brief Repairs the format of the output
-    # @param result Holds the result value 
     def repairOutput(self):
         result = 0
         try:
