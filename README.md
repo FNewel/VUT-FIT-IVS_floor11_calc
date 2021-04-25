@@ -28,13 +28,15 @@ If you want only the calculator not code use installer [here](#install)
     cd ./floor11_calc
     make
     ```
-3. Run it
-    ```
-    python calc_main.py
-    ```
 * Or you can only check prerequisites
     ```
     make prerequisites
+    ```
+3. Run it
+    ```
+    python calc_main.py
+    or
+    make run
     ```
 
 ### Install
