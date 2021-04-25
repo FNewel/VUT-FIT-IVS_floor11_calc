@@ -15,9 +15,20 @@ The project assignment from BUT FIT - IVS can be found [here](http://ivs.fit.vut
 * [Python](https://www.python.org/)
 * [PyQt](https://riverbankcomputing.com/software/pyqt)
 
+### System
+* Windows 64-bit
+
 ## Getting Started
 To get a local copy up and running follow these simple steps.
 If you want only the calculator not code use installer [here](#install)
+
+**Prerequisites before steps:**
+* [Python](https://www.python.org/downloads/windows/) 3.9.1 or greater
+* [Git](https://git-scm.com/download/win) 2.31.1 or greater
+* [GnuWin](http://gnuwin32.sourceforge.net/packages/make.htm) (make) 3.81 or greater
+* [Doxygen](https://www.doxygen.nl/download.html) 1.9.1 or greater
+
+*Don't forget to add directories to the PATH ([tutorial](https://stackoverflow.com/questions/9546324/adding-a-directory-to-the-path-environment-variable-in-windows))*
 
 1. Clone the repo
     ```
@@ -25,10 +36,10 @@ If you want only the calculator not code use installer [here](#install)
     ```
 2. Build it (also checks all prerequisites)
     ```
-    cd ./floor11_calc
+    cd ./floor11_calc/src
     make
     ```
-* Or you can only check prerequisites
+* Or you can only check prerequisites for Python
     ```
     make prerequisites
     ```
