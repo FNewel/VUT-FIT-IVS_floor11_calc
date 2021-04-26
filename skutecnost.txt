@@ -1,3 +1,147 @@
-soubor skutecnost.txt, který bude obsahovat informace o rozdílech mezi plánem projektu a skutečností,
+V tomto súbore sú zaznamenané hlavné rozdiely medzi pôvodným plánom (prvá verzia) a realitou ku dňu 27.4.2021
 
-http://ivs.fit.vutbr.cz/projekt-2_tymova_spoluprace2020-21.html#sekceStrukturaRepozitare
+Členovia tímu:
+Plán:
+    - Martin Talajka  - xtalaj00    (Github username: FNewell)
+    - Ondrej Kováč    - xkovac57    (Github username: MasloJePotravina)
+    - Michal Jančár   - xjanca17    (Github username: myshobsm)
+Realita: 
+    - Martin Talajka  - xtalaj00    (Github username: FNewell)
+    - Ondrej Kováč    - xkovac57    (Github username: MasloJePotravina)
+
+Bližšie informácie:
+Plán:
+    - Operačný systém:          - Linux
+    - Dokumentácia:             - Doxygen
+    - Programovací jazyk:       - Python
+    - GUI:                      - PyQt5 /Dear PyGui
+    - Verzovací systém          - Github
+    - Jazyk pre poznámky/git    - Angličtina
+    - Lincencia                 - GNU General Public License v3.0
+    - Funkcia navyše            - Náhodné číslo	
+
+Realita:
+    - Operačný systém:          - Windows
+    - Inštalácia:		- Pyinstaller + Inno Setup	
+    - Dokumentácia:             - Doxygen
+    - Programovací jazyk:       - Python
+    - GUI:                      - PyQt5 
+    - Verzovací systém          - Github
+    - Jazyk pre poznámky/git    - Angličtina
+    - Lincencia                 - GNU General Public License v3.0
+    - Funkcia navyše            - Náhodné číslo	
+
+Stanovené termíny:
+Plán:
+    Do 28.3 - Testy mat. funkcií
+    Do 4.4  - Mat. funkcie, Profiling
+    Do 12.4 - Grafické rozhranie, Testovanie graf. rozhrania, Makefile
+    Do 18.4 - Integrácia, Inštalácia
+    Do 25.4 - Dokumentácia, Príručka, README, Mockup
+    Do 29.4 - Odovzdanie
+
+Realita:
+    27.3 - Testy mat. funkcií
+    13.4 - Mat. funkcie, Profiling (later updated on 27.4.2021)
+    15.4 - Mockup (táto kalkulačka)	
+    19.4 - Grafické rozhranie, Testovanie graf. rozhrania
+    24.4 - Mockup (budúci koncept)	
+    26.4 - Makefile, Integrácia, Inštalácia, Dokumentácia, Príručka
+    27.4 - README	 
+    29.4 - Odovzdanie
+
+Rozdelené úlohy:
+Plán:
+    - xtalaj00:
+        - Makefile
+        - Dokumentácia inštalácie /odinštalácie (príručka)
+        - Github
+        - GUI
+        - Mockup (výsledná forma)
+        - Organizácia
+        
+    - xkovac57:
+        - Testy matematických funkcií
+        - Dokumentácia kódu (konečná verzia, preklad, úpravy)
+        - Inštalátor /Odinštalátor programu (SK/EN)
+        
+    - xjanca17:
+        - Matematická knižnica
+        - Prezentácia (výsledná forma)
+        - Profiling
+        - Readme
+        
+    - Zdieľané úlohy:
+        - Dokumentácia kódu
+            - O dokumentáciu kódu sa postarajú všetci účastníci, ale xkovac57 sa na konci postará o výslednú verziu
+        - Prezentácia
+            - O prezentáciu sa postarajú všetci účastníci, ale xjanca17 sa na konci postará o výslednú verziu
+        - Mockup
+        - Debugging
+
+Realita:
+    - xtalaj00:
+        - Makefile
+        - Dokumentácia inštalácie /odinštalácie (príručka)
+        - Github
+        - GUI
+        - Mockup (výsledná forma)
+        - Organizácia
+	- Readme
+	- Prezentácia (výsledná forma)
+	- Profiling (nové testy + PGO)
+        
+    - xkovac57:
+        - Testy matematických funkcií
+        - Dokumentácia kódu (konečná verzia, úpravy)
+        - Inštalátor /Odinštalátor programu (EN)
+	- Integrácia
+	- Matematická knižnica
+	- Profiling (protokol, prvé testy)
+	- Debugging (dôkaz)
+
+    - Zdieľané úlohy:
+        - Dokumentácia kódu
+        - Prezentácia
+Komunikačné kanály /nástroje
+Plán:
+    - Doodle    - Hlasovanie za deň a čas schôdze
+    - Discord   - Primárny chatový /komunikačný kanál, zdieľanie informácií 
+        Pravidlá:
+            - Zbytočne nespamovať, chovať sa slušne
+            - Informácie smerovať do kanálov na to určených
+    - Messenger - Sekundárny, hlavne chatový kanál
+    - Email     - Záložný komunikačný kanál, ak by niekoho nebolo možné dostihnúť na DS/Messenger
+    - Telefón   - Urgentný komunikačný nástroj (posledná záloha)
+
+Realita:
+    - Doodle    - Hlasovanie za deň a čas schôdze (využité raz, nezmyselné pre dvojčlenný tím)
+    - Discord   - Primárny chatový /komunikačný kanál, zdieľanie informácií (pravidelne využívané)
+        Pravidlá:
+            - Zbytočne nespamovať, chovať sa slušne
+            - Informácie smerovať do kanálov na to určených
+    - Messenger - Sekundárny, hlavne chatový kanál (občasne využívané)
+
+Verzovací systém:
+Plán:
+    - Github
+    Informácie:
+        - Repozitár je súkromný (private)
+        - Prístup pre členov tímu bude pridelený pomocou emailu /github username
+        - Prístup pre vyučujúceho /cvičiaceho bude pridelený pomocou emailu (ivskontrola - ivs.kontrola@gmail.com)
+        - URL: https://github.com/FNewel/floor11_calc
+
+Realita: Rovnaká
+
+Zhrnutie: Realita sa výrazne líšila od pôvodného plánu. Aj napriek tomu, že plán bol rozvrhnutý dobre, nedokázali sme ho dodržať.
+	  Toto bolo spôsobené najmä odchodom člena skupiny. xjanca17 sa rozhodol ukončiť štúdium približne v polovici projektu.
+	  Vtedy práve projekt stál na mieste, kde bolo potrebné vytvoriť matematické knižnice, ktoré boli jeho úlohou. S dobrým
+	  úmyslom sa snažil ďaľej na projekte pracovať aby sme nezostali v úzkych, ale kvôli tomu, že už nenavštevoval túto školu,
+	  nemal príliš veľkú motiváciu ďalej pracovať na projekte. Toto spôsobilo odkladanie deadlinov pre matematické funkcie a
+	  profiling až pokiaľ oficiálne neopustil tím a knižnicu nedokončil xkovac57. 
+	  Ďaľšou výraznou prekážkou bolo ochorenie vedúceho tímu xtalaj00 na COVID-19. Vzhľadom na ťažší priebeh ochorenia nebol
+	  schopný dodržať termín GUI čo spôsobilo ďaľšie týždňové oneskorenie. Ocitli sme sa teda v silnej časovej tiesni a projekt
+	  bolo nutné dokončiť.
+	  Aj napriek tomu sme veľmi spokojní s výsledkom našej práce. Kalkulačka má dokonca zopár nových funkcií, s ktorými nebolo
+	  na začiatku počítané (dark/light mode, pamäť, zátvorky...). Plán sme teda síce nedodržali, ale dokázali sme sa adaptovať
+	  zhoršeným podmienkam a prácu nakoniec napriek nim dokončiť.   
