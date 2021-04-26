@@ -51,11 +51,18 @@ If you want only the calculator not code use installer [here](#install)
     ```
 
 ### Install
-!TODO - až spravíme inštalačku
+This installer is primarily intended for Windows 10-64bit.
+
+1. Download installer [here](installer)
+2. Run it as administrator
+3. Accept the licecne, choose folder and install it
+4. Done !
+
+For a more detailed installation, please refer to the [Manual](installer/Manual.pdf)
+
 
 ### Usage
-!TODO - neskôr až bude kalkulačka hotova +- dokumentácia
-For more examples, please refer to the [Documentation](dokumentace.pdf)
+Everything you need to know is in the [Guide](src/Guide.pdf)
 
 ### Authors
 * Martin Talajka - [FNewell](https://github.com/FNewel)
