@@ -1,17 +1,2 @@
-Soubor hodnoceni.txt
-Soubor hodnoceni.txt bude obsahovat osobní ohodnocení jednotlivých členů týmu v rozsahu 0-300 % či 0-400 % (dle počtu členů týmu a dle aktivity člena týmu a jeho přínosu pro projekt). Součet všech osobních ohodnocení musí být max. stonásobek počtu členů týmu. Hodnocení musejí odsouhlasit všichni členové týmu. Soubor bude ve formátu (X je počet procent od 0 do 400):
-
-xlogin01 X (skutečně řešená část projektu)
-xlogin02 X (skutečně řešená část projektu)
-xlogin03 X (skutečně řešená část projektu)
-xlogin04 X (skutečně řešená část projektu)
-Příklad:
-xlogin01 100 (základ GUI a základní mat. operace)
-xlogin02 100 (pokročilé mat. operace)
-xlogin03 90 (profiling, instalátor)
-xlogin04 110 (testy, dokumentace)
-Pokud by student přerozdělením bodů přesáhl maximum za celý projekt, body se oříznou na maximum 52 bodů.
-
-Tento soubor je zpracováván automaticky, nedodržení struktury může vést na hodnocení nula bodů.
-
-http://ivs.fit.vutbr.cz/projekt-2_tymova_spoluprace2020-21.html#sekceStrukturaRepozitare
+xtalaj00 100 (Makefile, Vytvorenie mockupov, Readme, calc_main (gui integrácia), Guide, Manual, Ikonka, Optimalizácia profilingu/mat. knižnice, prezentácia)
+xkovac57 100 (Matematická knižnica, Profiling, Testy, calc_main (mat. kalkulácie), Dokumentácia, Inštalačka, prezentácia)
