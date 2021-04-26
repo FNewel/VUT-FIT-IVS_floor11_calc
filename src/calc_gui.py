@@ -13,10 +13,11 @@
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 ## @brief Class responsible for the proper look of GUI of the calculator
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        
+
         # Set MainWindow name and size
         MainWindow.setObjectName("MainWindow")
         MainWindow.setMinimumSize(QtCore.QSize(300, 485))
