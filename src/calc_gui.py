@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-
 ## @file calc_gui.py
 # @author Martin Talajka
 # @date 19.4.2021
-# @brief The main graphical interface of the calculator
+# @brief The interface of the calculator
 
 # Form implementation generated from reading ui file 'calc_gui.ui'
 #
@@ -15,9 +13,10 @@
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
+## @brief Class responsible for the proper look of GUI of the calculator
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        
         # Set MainWindow name and size
         MainWindow.setObjectName("MainWindow")
         MainWindow.setMinimumSize(QtCore.QSize(300, 485))
@@ -32,6 +31,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
 
         # Set calculator UI to dark (by default)
+        ## @brief The frame of the calculator
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(0, 0, 300, 480))
         self.frame.setMinimumSize(QtCore.QSize(300, 470))
@@ -331,6 +331,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         # Button connection with Calculator logic (calc_main.py)
+
         self.n_button_0.clicked.connect(lambda: self.aNum("0"))
         self.n_button_1.clicked.connect(lambda: self.aNum("1"))
         self.n_button_2.clicked.connect(lambda: self.aNum("2"))

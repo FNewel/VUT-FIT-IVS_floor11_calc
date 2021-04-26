@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 ## @file calc_main.py
 # @author Martin Talajka
 # @author Ondrej Kováč
@@ -10,8 +8,8 @@
 # @section intro Introduction
 # This is a documentation for Floor11 Calculator software created for IVS course, by xtalaj00 and xkovac57.
 #
-# The software is a simple calculator capable of calculating basic arithmetic operations such as addition and subtraction, \n
-# multiplication and division, exponents and roots or factorial. It's also capable to calculate with parentheses, has a simple\n
+# The software is a simple calculator capable of calculating basic arithmetic operations such as addition and subtraction,
+# multiplication and division, exponents and roots or factorial. It's also capable to calculate with parentheses, has a simple
 # memory and it can generate random numbers. It can also switch beween dark and light modes to ease the strain on your eyes!
 
 
@@ -404,7 +402,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 return 
 
             if float(fact_num) > 100:
-                self.errorHandler("ERR_out_of_range")
+                self.errorHandler("ERR_fact_out_of_range")
                 return 
 
             try:
@@ -480,11 +478,11 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 return 
 
             if exp_x == "" or exp_n == "":
-                self.errorHandler("ERR_exp_no_op")
+                self.errorHandler("ERR_exp_no_num")
                 return 
 
             if float(exp_n) > 100:
-                self.errorHandler("ERR_out_of_range")
+                self.errorHandler("ERR_exp_out_of_range")
                 return 
 
             try:
@@ -543,7 +541,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         while(text.find("+") >= 0 or text[1:].find("-") >= 0):
 
             if "e" in text:
-                self.errorHandler("ERR_out_of_range")
+                self.errorHandler("ERR_bad_num")
                 return 
 
             left_num = ""
@@ -606,8 +604,9 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 left_op = float(left_op)
             except:
                 left_op = ""
+                return left_op
 
-        if abs(left_op) > 999999999 or abs(left_op) < 0.0001:
+        if (abs(left_op) > 999999999 or abs(left_op) < 0.0001) and left_op != 0:
             self.errorHandler("ERR_out_of_range")
             return 
 
@@ -636,8 +635,10 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 right_op = float(right_op)
             except:
                 right_op = ""
+                return right_op
 
-        if abs(right_op) > 999999999 or abs(right_op) < 0.0001:
+
+        if (abs(right_op) > 999999999 or abs(right_op) < 0.0001) and right_op != 0:
             self.errorHandler("ERR_out_of_range")
             return 
 

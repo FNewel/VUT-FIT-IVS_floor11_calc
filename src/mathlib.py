@@ -98,6 +98,4 @@ def rng(x):
     if x < 0:
         return randint(x,0)
 
-
-
 #End of file mathlib.py
