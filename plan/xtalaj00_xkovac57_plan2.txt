@@ -42,7 +42,7 @@ Upravený plán (v obmedzenom rozsahu platí pôvodný plán, tu sú popísané 
     - GUI:                      - PyQt5
 
 -- Stanovené termíny
-    Do 26.8 - Finálne dokončenie (GUI, Testovanie GUI, Makefile, Integrácia, Inštalácia)
+    Do 26.4 - Finálne dokončenie (GUI, Testovanie GUI, Makefile, Integrácia, Inštalácia)
     Do 28.4 - Dokumentácia, Príručka, README, Mockup
     Do 29.4 - Odovzdanie
 
