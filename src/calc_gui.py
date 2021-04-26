@@ -314,7 +314,7 @@ class Ui_MainWindow(object):
 
         self.lVersion = QtWidgets.QLabel(self.pWin)
         self.lVersion.setGeometry(QtCore.QRect(180, 250, 80, 15))
-        self.lVersion.setText("Version 1.0.0")
+        self.lVersion.setText("Version 1.0.5")
 
         # Menu entry - Information
         self.actionInformation = QtWidgets.QAction(MainWindow)
@@ -445,7 +445,7 @@ class Ui_MainWindow(object):
 
         self.button_random.setText(_translate("MainWindow", "RND"))
         self.button_random.setShortcut(_translate("MainWindow", "r"))
-        self.button_random.setToolTip("Random number from x to y")
+        self.button_random.setToolTip("Random number from 0 to x")
 
         self.button_delete.setText(_translate("MainWindow", "⇚"))
         self.button_delete.setShortcut(_translate("MainWindow", "Backspace"))
@@ -462,6 +462,7 @@ class Ui_MainWindow(object):
         self.menuMenu.setTitle(_translate("MainWindow", "Menu"))
         self.actionDark_mode.setText(_translate("MainWindow", "Dark mode"))
         self.actionHelp.setText(_translate("MainWindow", "Help"))
+        self.actionHelp.setShortcut(_translate("MainWindow", "F1"))
         self.actionInformation.setText(_translate("MainWindow", "Information"))
 
 # End of file calc_gui.py

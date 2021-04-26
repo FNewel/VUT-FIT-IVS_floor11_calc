@@ -173,7 +173,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
     ## @brief Opens Guide PDF on a specific system (Windows/Linux)
     def oPDF_g(self):
         srcDir = os.path.dirname(os.path.realpath(__file__))
-        pdf_path = srcDir + os.path.sep + 'CalcGuide.pdf'
+        pdf_path = srcDir + os.path.sep + 'Guide.pdf'
         if platform.system() == "Windows":
             os.startfile(pdf_path)
         elif platform.system() == "Linux":
