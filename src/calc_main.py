@@ -13,18 +13,18 @@
 # memory and it can generate random numbers. It can also switch beween dark and light modes to ease the strain on your eyes!
 
 
-
 import os
 import re
 import sys
 import platform
 
 import mathlib
-import qtmodern.styles 
+import qtmodern.styles
 
 from PyQt5 import QtWidgets
 from calc_gui import Ui_MainWindow
 from collections import OrderedDict
+
 
 ## @brief Class responsible for the logical aspect of the calculator
 class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -36,7 +36,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         ## Text displayed on the main display
         self.md_text = ""
         ## Text displayed on the secondary (upper) display
-        self.sd_text = ""   
+        self.sd_text = ""
 
         ## List of basic binary operands ('+','-','/','*','^')
         self.bin_ops = ['+', '-', '/', '*', '^']
@@ -44,7 +44,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.un_ops = ['√', '!']    # rnd( excluded
         ## List of parenthesis characters ('(',')')
         self.parentheses = ['(', ')']
-        
+
         ## Number of open parentheses
         self.open_par = 0
         ## Bool that keeps track of whether a decimal point can be placed
@@ -55,7 +55,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         self.error = False
         ## Bool that informs us about whether a result from previous calculation is currently being shown
         self.result = False
-
 
     ## @brief Appends a number
     # @param n Number that's being appended
@@ -84,7 +83,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         elif self.md_text == "" and op == "-":
             self.md_text += op
             self.main_display.setText(self.md_text)
-    
 
     ## @brief Appends a unary operator
     # @param op Operator that's being appended
@@ -309,7 +307,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 pos += len(c)
         return positions
 
-    ## @brief Finds corresponding pairs of parentheses 
+    ## @brief Finds corresponding pairs of parentheses
     # @param text Text that's being searched
     # @return @p pairs Dictionary with parenthesis pairs
     def findParPairs(self, text):
@@ -330,27 +328,27 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
         text = self.calcRnd(text)
         if self.error:
-            return 
+            return
 
         text = self.calcFact(text)
         if self.error:
-            return 
+            return
 
         text = self.calcRoot(text)
         if self.error:
-            return 
+            return
 
         text = self.calcExp(text)
         if self.error:
-            return 
+            return
 
         text = self.calcMulDiv(text)
         if self.error:
-            return 
+            return
 
         text = self.calcPlusMin(text)
         if self.error:
-            return 
+            return
 
         return str(text)
 
@@ -366,7 +364,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
             rnd_num = self.getRightOperand(text, pos + 2)
             if self.error:
-                return 
+                return
 
             if rnd_num == "":
                 tmp = mathlib.rng(100)
@@ -375,10 +373,10 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                     tmp = mathlib.rng(int(rnd_num))
                 except ValueError:
                     self.errorHandler("ERR_rnd_zero")
-                    return 
+                    return
                 except TypeError:
                     self.errorHandler("ERR_rnd_flt")
-                    return 
+                    return
 
             text = text[:pos] + str(tmp) + text[pos + 3 + len(str(rnd_num)):]
         return text
@@ -395,24 +393,24 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
             fact_num = self.getRightOperand(text, pos)
             if self.error:
-                return 
+                return
 
             if fact_num == "":
                 self.errorHandler("ERR_fact_no_num")
-                return 
+                return
 
             if float(fact_num) > 100:
                 self.errorHandler("ERR_fact_out_of_range")
-                return 
+                return
 
             try:
                 tmp = mathlib.fact(fact_num)
             except ValueError:
                 self.errorHandler("ERR_fact_neg")
-                return 
+                return
             except TypeError:
                 self.errorHandler("ERR_fact_flt")
-                return 
+                return
 
             text = text[:pos] + str(tmp) + text[pos + 1 + len(str(fact_num)):]
         return text
@@ -432,7 +430,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             root_num = self.getRightOperand(text, pos)
             root_lvl = self.getLeftOperand(text, pos)
             if self.error:
-                return 
+                return
 
             if root_lvl == "":
                 implicit_root = True
@@ -440,19 +438,19 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
             if root_num == "":
                 self.errorHandler("ERR_root_no_num")
-                return 
+                return
 
             try:
                 tmp = mathlib.root(root_lvl, root_num)
             except ValueError:
                 self.errorHandler("ERR_root_badVal_n")
-                return 
+                return
             except TypeError:
                 self.errorHandler("ERR_root_n_flt")
-                return 
+                return
             except ZeroDivisionError:
                 self.errorHandler("ERR_root_n_zero")
-                return 
+                return
 
             if implicit_root is True:
                 root_lvl = ""
@@ -471,28 +469,27 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
             pos = text.find("^")
 
-
             exp_n = self.getRightOperand(text, pos)
             exp_x = self.getLeftOperand(text, pos)
             if self.error:
-                return 
+                return
 
             if exp_x == "" or exp_n == "":
                 self.errorHandler("ERR_exp_no_num")
-                return 
+                return
 
             if float(exp_n) > 100:
                 self.errorHandler("ERR_exp_out_of_range")
-                return 
+                return
 
             try:
                 tmp = mathlib.exp(exp_x, exp_n)
             except ValueError:
                 self.errorHandler("ERR_exp_n_neg")
-                return 
+                return
             except TypeError:
                 self.errorHandler("ERR_exp_n_flt")
-                return 
+                return
 
             text = text[:pos - len(str(exp_x))] + str(tmp) + text[pos + 1 + len(str(exp_n)):]
         return text
@@ -514,7 +511,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             right_num = self.getRightOperand(text, pos)
             left_num = self.getLeftOperand(text, pos)
             if self.error:
-                return 
+                return
 
             if left_num == "" or right_num == "":
                 self.errorHandler("ERR_mul_div_no_op")
@@ -525,7 +522,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                     tmp = mathlib.div(left_num, right_num)
                 except ZeroDivisionError:
                     self.errorHandler("ERR_div_zero")
-                    return 
+                    return
             if text[pos] == "*":
                 tmp = mathlib.mul(left_num, right_num)
 
@@ -542,7 +539,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
             if "e" in text:
                 self.errorHandler("ERR_bad_num")
-                return 
+                return
 
             left_num = ""
             right_num = ""
@@ -558,11 +555,11 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
             right_num = self.getRightOperand(text, pos)
             left_num = self.getLeftOperand(text, pos)
             if self.error:
-                return 
+                return
 
             if left_num == "" or right_num == "":
                 self.errorHandler("ERR_plus_min_no_op")
-                return 
+                return
 
             if text[pos] == "+":
                 tmp = mathlib.add(left_num, right_num)
@@ -574,7 +571,7 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
         return text
 
     ## @brief Finds the left operand of an operation which is on a given position in a given text
-    # @param text Text in which we are searching for the operand 
+    # @param text Text in which we are searching for the operand
     # @param pos Position of the operand in the text
     # @return @p left_op
     # @return None if the operand is out of bounds
@@ -596,7 +593,6 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 break
         left_op = left_op[::-1]
 
-
         try:
             left_op = int(left_op)
         except:
@@ -608,12 +604,12 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
 
         if (abs(left_op) > 999999999 or abs(left_op) < 0.0001) and left_op != 0:
             self.errorHandler("ERR_out_of_range")
-            return 
+            return
 
         return left_op
 
     ## @brief Finds the right operand of an operation which is on a given position in a given text
-    # @param text Text in which we are searching for the operand 
+    # @param text Text in which we are searching for the operand
     # @param pos Position of the operand in the text
     # @return @p right_op
     # @return None if the operand is out of bounds
@@ -637,10 +633,9 @@ class calcLogic(QtWidgets.QMainWindow, Ui_MainWindow):
                 right_op = ""
                 return right_op
 
-
         if (abs(right_op) > 999999999 or abs(right_op) < 0.0001) and right_op != 0:
             self.errorHandler("ERR_out_of_range")
-            return 
+            return
 
         return right_op
 
