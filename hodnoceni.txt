@@ -1,2 +1,3 @@
-xtalaj00 100 (Makefile, Vytvorenie mockupov, Readme, calc_main (gui integrácia), Guide, Manual, Ikonka, Optimalizácia profilingu/mat. knižnice, prezentácia)
-xkovac57 100 (Matematická knižnica, Profiling, Testy, calc_main (mat. kalkulácie), Dokumentácia, Inštalačka, prezentácia)
+xtalaj00 150 (Makefile, Vytvorenie mockupov, Readme, calc_main (gui integrácia), Guide, Manual, Ikonka, Optimalizácia profilingu/mat. knižnice, prezentácia)
+xkovac57 150 (Matematická knižnica, Profiling, Testy, calc_main (mat. kalkulácie), Dokumentácia, Inštalačka, prezentácia)
+xjanca17 0 (-Ukončil štúdium)
